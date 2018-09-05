@@ -22,14 +22,11 @@ public @interface MethodRateLimit {
      */
     public MethodRateLimit.CheckTypeEnum checkType() default MethodRateLimit.CheckTypeEnum.ALL;
 
-    /**
-     * 限流时间间隔,以秒为单位。默认值60
-     */
-    public String refreshInterval() default "60";
+
     /**
      * 限流次数。默认值1000
      */
-    public String limit() default "1000";
+    public long limit() default 1000;
 
     public enum CheckTypeEnum {
         /**

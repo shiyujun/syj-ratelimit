@@ -20,7 +20,7 @@ public class TestController {
 
 
     @PostMapping("/noParam")
-    @MethodRateLimit(refreshInterval = "90")
+    @MethodRateLimit
     public void noParam(){
         System.out.println("拦截完毕。。。。");
     }
