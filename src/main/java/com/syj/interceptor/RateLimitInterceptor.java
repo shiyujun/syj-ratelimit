@@ -1,8 +1,9 @@
+/*
 
 package com.syj.interceptor;
 
 
-import com.syj.EnableSyjRateLimit;
+import com.syj.annotation.EnableSyjRateLimit;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpInputMessage;
@@ -20,13 +21,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
+*/
 /**
  * describe:
  *
  * @创建人 syj
  * @创建时间 2018/09/04
  * @描述 核心拦截器
- */
+ *//*
+
 
 
 @RestControllerAdvice
@@ -66,3 +69,4 @@ public class RateLimitInterceptor implements RequestBodyAdvice  {
 }
 
 
+*/

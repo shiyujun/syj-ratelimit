@@ -1,5 +1,6 @@
-package com.syj;
+package com.syj.annotation;
 
+import com.syj.config.ApplicationConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -11,15 +12,15 @@ import java.lang.annotation.*;
  * @创建时间 2018/09/04
  * @描述 限流注解
  */
-@Target({ElementType.TYPE,ElementType.METHOD})
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface EnableSyjRateLimit {
+public @interface MethodRateLimit {
     /**
      * 限流类型。默认值：ALL。可选值：ALL,IP,USER,CUSTOM
      */
-    public CheckTypeEnum checkType() default CheckTypeEnum.ALL;
+    public MethodRateLimit.CheckTypeEnum checkType() default MethodRateLimit.CheckTypeEnum.ALL;
 
     /**
      * 限流时间间隔,以秒为单位。默认值60
