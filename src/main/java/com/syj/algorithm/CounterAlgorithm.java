@@ -30,7 +30,7 @@ public class CounterAlgorithm implements RateLimiterAlgorithm {
         rateLimiter.counterConsume(key,limit);
     }
 
-    public  void clear(){
+    private  void clear(){
         // 参数：1、任务体 2、首次执行的延时时间
         //      3、任务执行间隔 4、间隔时间单位
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(()-> rateLimiter.counterClear(), 0, Const.REFRESH_INTERVAL, TimeUnit.SECONDS);
