@@ -10,11 +10,13 @@ import com.syj.ratelimit.impl.DataBaseRateLimiter;
 import com.syj.ratelimit.impl.MapRateLimiter;
 import com.syj.util.Const;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.context.annotation.DependsOn;
 
 
 /**
@@ -45,7 +47,7 @@ public class ApplicationConfiguration {
     @MapperScan("com.syj.dao")
     public static class SpringDataConfiguration {
         @Bean
-        public RateLimiter dataBaseRateLimiter() {
+        public RateLimiter rateLimiter() {
             return new DataBaseRateLimiter();
         }
     }
@@ -54,10 +56,12 @@ public class ApplicationConfiguration {
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "map", matchIfMissing = true)
     public static class MapConfiguration {
         @Bean
-        public RateLimiter mapRateLimiter() {
+        public RateLimiter rateLimiter() {
             return new MapRateLimiter();
         }
     }
+
+    @DependsOn("rateLimiter")
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "leaky")
     public static class LeakyBucketConfiguration {
         @Bean
@@ -67,20 +71,21 @@ public class ApplicationConfiguration {
 
     }
 
+    @DependsOn("rateLimiter")
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "token")
     public static class TokenBucketConfiguration {
         @Bean
-        public RateLimiterAlgorithm rateLimiterAlgorithm() {
-            return new TokenBucketAlgorithm();
+        public RateLimiterAlgorithm rateLimiterAlgorithm(RateLimiter rateLimiter) {
+            return new TokenBucketAlgorithm(rateLimiter);
         }
     }
 
-
+    @DependsOn("rateLimiter")
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "counter", matchIfMissing = true)
     public static class CounterConfiguration {
         @Bean
-        public RateLimiterAlgorithm rateLimiterAlgorithm() {
-            return new CounterAlgorithm();
+        public RateLimiterAlgorithm rateLimiterAlgorithm(RateLimiter rateLimiter) {
+            return new CounterAlgorithm(rateLimiter);
         }
     }
 }

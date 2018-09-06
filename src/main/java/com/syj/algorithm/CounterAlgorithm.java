@@ -15,11 +15,12 @@ import java.util.concurrent.TimeUnit;
  * @描述 计数器法限流
  */
 public class CounterAlgorithm implements RateLimiterAlgorithm {
-    @Autowired
+
     private RateLimiter rateLimiter;
 
-    public CounterAlgorithm(){
+    public CounterAlgorithm(RateLimiter rateLimiter){
         super();
+        this.rateLimiter=rateLimiter;
         clear();
     }
 

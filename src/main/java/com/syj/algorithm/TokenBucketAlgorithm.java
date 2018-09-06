@@ -19,11 +19,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class TokenBucketAlgorithm implements RateLimiterAlgorithm {
     final static Logger log = LoggerFactory.getLogger(TokenBucketAlgorithm.class);
-    @Autowired
+
     private RateLimiter rateLimiter;
 
-    public TokenBucketAlgorithm(){
+    public TokenBucketAlgorithm(RateLimiter rateLimiter){
         super();
+        this.rateLimiter=rateLimiter;
         setTokenLimit();
     }
     @Override

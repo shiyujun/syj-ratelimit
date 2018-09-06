@@ -1,5 +1,7 @@
 package com.syj.algorithm;
 
+import com.syj.ratelimit.RateLimiter;
+
 /**
  * describe:
  *
@@ -8,5 +10,6 @@ package com.syj.algorithm;
  * @描述 算法策略接口
  */
 public interface RateLimiterAlgorithm {
+
     public void consume(String key, long limit);
 }
