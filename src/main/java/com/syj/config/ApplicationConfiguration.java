@@ -38,7 +38,7 @@ public class ApplicationConfiguration {
 
     }
 
-    @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "jpa")
+    @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "sql")
     public static class SpringDataConfiguration {
 
     }

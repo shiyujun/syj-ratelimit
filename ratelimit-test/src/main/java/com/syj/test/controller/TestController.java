@@ -1,7 +1,6 @@
 package com.syj.test.controller;
 
 
-import com.syj.annotation.EnableSyjRateLimit;
 import com.syj.annotation.MethodRateLimit;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +19,7 @@ public class TestController {
 
 
     @PostMapping("/noParam")
-    @MethodRateLimit
+    @MethodRateLimit(limit = 10)
     public void noParam(){
         System.out.println("拦截完毕。。。。");
     }

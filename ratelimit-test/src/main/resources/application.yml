@@ -1,2 +1,7 @@
 server:
     port: 8888
+
+#使用令牌桶算法
+syj:
+  rateLimit:
+    algorithm: token

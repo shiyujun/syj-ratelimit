@@ -54,7 +54,6 @@ public class MapRateLimiter extends RateLimiter {
     @Override
     public void setTokenLimit() {
         for(Map.Entry<String, Long> entry:map.entrySet()){
-            System.out.println(entry.getKey()+"/"+entry.getValue());
             long maxValue=keyMaxMap.get(entry.getKey());
             long nowValue=entry.getValue()+Const.TOKEN_BUCKET_STEP_NUM;
             if(maxValue>nowValue){
