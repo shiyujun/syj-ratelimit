@@ -2,7 +2,6 @@ package com.syj.config;
 
 import com.syj.algorithm.RateLimiterAlgorithm;
 import com.syj.annotation.MethodRateLimit;
-import com.syj.service.RateLimiter;
 import com.syj.util.RateLimiterUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

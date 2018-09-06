@@ -18,21 +18,24 @@ import java.util.List;
 public interface BaseMapper {
 
 
-
-    @Select("select COALESCE(max(value),-1) from syj_rate_limit where key =#{key}")
+    @Select("select COALESCE(max(`value`),-1) from syj_rate_limit where `key` =#{key}")
     public Integer getKey(@Param("key") String key);
 
-    @Update("update syj_rate_limit set value =#{value} where key =#{key}")
+    @Update("update syj_rate_limit set `value` =#{value} where `key` =#{key}")
     void updateValue(@Param("key") String key,@Param("value")Integer value);
 
-    @Insert("insert into syj_rate_limit(key,value) values(#{key},#{value})")
+    @Insert("insert into syj_rate_limit(`key`,`value`) values(#{key},#{value})")
     void insert(@Param("key")String key, @Param("value")Long value);
 
-    @Update("update syj_rate_limit set value =0")
+    @Update("update syj_rate_limit set `value` =0")
     void clearValue();
 
-    @Insert("insert into syj_rate_limit(key,value,limit) values(#{key},#{value},#{value})")
+    @Insert("insert into syj_rate_limit(`key`,`value`,`limit`) values(#{key},#{value},#{value})")
     void insertValueAndLimit(@Param("key")String key, @Param("value")Long value);
-    @Select("select key,value,limit from syj_rate_limit")
+
+    @Select("select `key`,`value`,limit from syj_rate_limit")
     List<TokenLimit> getAll();
+
+    @Update("<foreach collection='list' separator=';' item='cus'>  update syj_rate_limit set `value` =#{value} where `key` =#{key}  </foreach>")
+    void batchUpdate(List<TokenLimit> tokenLimitList);
 }

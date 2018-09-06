@@ -1,13 +1,10 @@
 package com.syj.algorithm;
 
-import com.syj.service.RateLimiter;
+import com.syj.ratelimit.RateLimiter;
 import com.syj.util.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**

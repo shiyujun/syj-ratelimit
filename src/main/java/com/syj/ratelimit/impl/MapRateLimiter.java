@@ -1,13 +1,10 @@
-package com.syj.service.impl;
+package com.syj.ratelimit.impl;
 
-import com.syj.annotation.MethodRateLimit;
-import com.syj.service.RateLimiter;
+import com.syj.ratelimit.RateLimiter;
 import com.syj.util.Const;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * describe:
@@ -33,6 +30,7 @@ public class MapRateLimiter extends RateLimiter {
     }
     @Override
     public void counterClear(){
+        System.err.println("mapclear");
         map.clear();
     }
 
@@ -53,6 +51,7 @@ public class MapRateLimiter extends RateLimiter {
 
     @Override
     public void setTokenLimit() {
+        System.err.println("setTokenLimit");
         for(Map.Entry<String, Long> entry:map.entrySet()){
             long maxValue=keyMaxMap.get(entry.getKey());
             long nowValue=entry.getValue()+Const.TOKEN_BUCKET_STEP_NUM;

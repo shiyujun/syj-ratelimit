@@ -4,4 +4,6 @@ server:
 #使用令牌桶算法
 syj:
   rateLimit:
-    algorithm: token
+    #db: sql
+    #algorithm: token
+

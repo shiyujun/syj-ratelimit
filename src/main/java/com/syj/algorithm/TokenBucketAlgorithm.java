@@ -1,7 +1,10 @@
 package com.syj.algorithm;
 
-import com.syj.service.RateLimiter;
+import com.syj.ratelimit.RateLimiter;
+import com.syj.ratelimit.impl.DataBaseRateLimiter;
 import com.syj.util.Const;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.Executors;
@@ -15,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @描述
  */
 public class TokenBucketAlgorithm implements RateLimiterAlgorithm {
+    final static Logger log = LoggerFactory.getLogger(TokenBucketAlgorithm.class);
     @Autowired
     private RateLimiter rateLimiter;
 
@@ -27,6 +31,7 @@ public class TokenBucketAlgorithm implements RateLimiterAlgorithm {
         rateLimiter.tokenConsume(key,limit);
     }
     private void setTokenLimit(){
+        log.info("setTokenLimit...");
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(()-> rateLimiter.setTokenLimit(), 0, Const.TOKEN_BUCKET_TIME_INTERVAL, TimeUnit.MILLISECONDS);
     }
 }

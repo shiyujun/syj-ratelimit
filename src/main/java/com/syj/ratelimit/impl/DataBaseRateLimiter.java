@@ -1,12 +1,13 @@
-package com.syj.service.impl;
+package com.syj.ratelimit.impl;
 
-import com.syj.annotation.MethodRateLimit;
+import com.syj.config.AnnotationAspect;
 import com.syj.dao.BaseMapper;
 import com.syj.entity.TokenLimit;
-import com.syj.service.RateLimiter;
+import com.syj.ratelimit.RateLimiter;
 import com.syj.util.Const;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 
 
 public class DataBaseRateLimiter extends RateLimiter {
-
+    final static Logger log = LoggerFactory.getLogger(DataBaseRateLimiter.class);
     @Autowired
     private BaseMapper baseMapper;
 
@@ -60,16 +61,19 @@ public class DataBaseRateLimiter extends RateLimiter {
 
     @Override
     public void setTokenLimit() {
+        log.info("开始装");
         List<TokenLimit> tokenLimitList=baseMapper.getAll();
         for (TokenLimit tokenLimit:tokenLimitList){
             long maxValue=tokenLimit.getLimit();
             long nowValue=tokenLimit.getValue()+Const.TOKEN_BUCKET_STEP_NUM;
             if(maxValue>nowValue){
                 tokenLimit.setValue(nowValue);
+                log.info(""+nowValue);
+                log.info(""+tokenLimit.getValue());
             }else {
                 tokenLimit.setValue(maxValue);
             }
         }
-
+        baseMapper.batchUpdate(tokenLimitList);
     }
 }
