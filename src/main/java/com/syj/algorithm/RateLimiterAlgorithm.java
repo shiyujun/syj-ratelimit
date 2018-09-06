@@ -1,7 +1,5 @@
 package com.syj.algorithm;
 
-import com.syj.ratelimit.RateLimiter;
-
 /**
  * describe:
  *

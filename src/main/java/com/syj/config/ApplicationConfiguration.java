@@ -9,12 +9,10 @@ import com.syj.ratelimit.RateLimiter;
 import com.syj.ratelimit.impl.DataBaseRateLimiter;
 import com.syj.ratelimit.impl.MapRateLimiter;
 import com.syj.util.Const;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
@@ -26,7 +24,7 @@ import org.springframework.context.annotation.DependsOn;
  * @创建时间 2018/09/05
  * @描述
  */
-
+@Slf4j
 @Configuration
 public class ApplicationConfiguration {
 

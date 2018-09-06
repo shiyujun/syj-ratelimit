@@ -2,6 +2,7 @@ package com.syj.ratelimit.impl;
 
 import com.syj.ratelimit.RateLimiter;
 import com.syj.util.Const;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @创建时间 2018/09/05
  * @描述
  */
+@Slf4j
 public class MapRateLimiter extends RateLimiter {
     public volatile Map<String,Long> map=new ConcurrentHashMap<String, Long>();
     public volatile Map<String,Long> keyMaxMap=new ConcurrentHashMap<String, Long>();

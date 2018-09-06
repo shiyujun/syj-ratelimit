@@ -3,13 +3,12 @@ package com.syj.config;
 import com.syj.algorithm.RateLimiterAlgorithm;
 import com.syj.annotation.MethodRateLimit;
 import com.syj.util.RateLimiterUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -23,13 +22,13 @@ import javax.servlet.http.HttpServletRequest;
  * @创建时间 2018/09/05
  * @描述 MethodRateLimit注解切面类
  */
+@Slf4j
 @Aspect
 public class AnnotationAspect {
 
     @Autowired
     private RateLimiterAlgorithm rateLimiterAlgorithm;
 
-    final static Logger log = LoggerFactory.getLogger(AnnotationAspect.class);
 
     /**
      * 切点

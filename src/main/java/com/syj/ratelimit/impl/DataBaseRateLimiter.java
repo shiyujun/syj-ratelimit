@@ -1,12 +1,10 @@
 package com.syj.ratelimit.impl;
 
-import com.syj.config.AnnotationAspect;
 import com.syj.dao.BaseMapper;
 import com.syj.entity.TokenLimit;
 import com.syj.ratelimit.RateLimiter;
 import com.syj.util.Const;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -19,9 +17,9 @@ import java.util.List;
  * @描述
  */
 
-
+@Slf4j
 public class DataBaseRateLimiter extends RateLimiter {
-    final static Logger log = LoggerFactory.getLogger(DataBaseRateLimiter.class);
+
     @Autowired
     private BaseMapper baseMapper;
 

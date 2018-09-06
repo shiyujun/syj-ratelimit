@@ -1,8 +1,5 @@
 package com.syj.annotation;
 
-import com.syj.config.ApplicationConfiguration;
-import org.springframework.context.annotation.Import;
-
 import java.lang.annotation.*;
 
 /**
