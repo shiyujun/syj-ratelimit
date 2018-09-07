@@ -1,6 +1,7 @@
 package com.syj.config;
 
 import com.syj.algorithm.RateLimiterAlgorithm;
+import com.syj.annotation.ClassRateLimit;
 import com.syj.annotation.MethodRateLimit;
 import com.syj.util.RateLimiterUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,14 +25,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @Aspect
-public class AnnotationAspect {
+public class MethodAnnotationAspect {
 
     @Autowired
     private RateLimiterAlgorithm rateLimiterAlgorithm;
 
 
     /**
-     * 切点
+     * 方法拦截注解切点
      * @param methodRateLimit
      */
     @Pointcut("@annotation(methodRateLimit)")
@@ -49,6 +50,7 @@ public class AnnotationAspect {
         String key= RateLimiterUtil.getRateKey(joinPoint,methodRateLimit.checkType());
         rateLimiterAlgorithm.consume(key,methodRateLimit.limit());
     }
+
 
 
 }

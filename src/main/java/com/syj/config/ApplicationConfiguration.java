@@ -35,8 +35,12 @@ public class ApplicationConfiguration {
 
 
     @Bean
-    public AnnotationAspect annotationAspect(){
-        return new AnnotationAspect();
+    public MethodAnnotationAspect methodAnnotationAspect(){
+        return new MethodAnnotationAspect();
+    }
+    @Bean
+    public ClassAnnotationAspect classAnnotationAspect(){
+        return new ClassAnnotationAspect();
     }
 
     @ConditionalOnClass(RedisTemplate.class)
