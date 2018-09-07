@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @创建时间 2018/09/05
  * @描述 计数器法限流
  */
-@Slf4j
+
 @RequiredArgsConstructor
 public class CounterAlgorithm implements RateLimiterAlgorithm {
     @NonNull

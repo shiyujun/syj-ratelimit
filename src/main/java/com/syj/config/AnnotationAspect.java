@@ -46,21 +46,8 @@ public class AnnotationAspect {
      */
     @Before("annotationPointcut(methodRateLimit)")
     public void doBefore(JoinPoint joinPoint, MethodRateLimit methodRateLimit) {
-        Class<?> target = joinPoint.getTarget().getClass();
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        //以方法名加参数列表作为唯一标识方法的key
-        StringBuffer stringBuffer=new StringBuffer(signature.getMethod().getName());
-        Class[] parameterTypes=signature.getParameterTypes();
-        for (Class clazz:parameterTypes){
-            stringBuffer.append(clazz.getName());
-        }
-        String methodName=stringBuffer.toString();
-        //获取HttpServletRequest对象
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest httpServletRequest = requestAttributes.getRequest();
-        String key= RateLimiterUtil.getRateKey(methodRateLimit.checkType(),methodName,httpServletRequest);
+        String key= RateLimiterUtil.getRateKey(joinPoint,methodRateLimit.checkType());
         rateLimiterAlgorithm.consume(key,methodRateLimit.limit());
-        log.info("MethodRateLimit  interceptor {},method:{} end.....",target,methodName);
     }
 
 

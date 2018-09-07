@@ -11,7 +11,7 @@ public interface  RateLimiter {
 
     public  void tokenConsume(String key, long limit);
 
-    public  void setTokenLimit();
+    public  void tokenLimitIncreaseData();
 
 
 

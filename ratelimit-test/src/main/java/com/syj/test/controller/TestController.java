@@ -2,6 +2,7 @@ package com.syj.test.controller;
 
 
 import com.syj.annotation.MethodRateLimit;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,14 @@ public class TestController {
     }
 
 
-    @PostMapping("/noParam")
-    @MethodRateLimit(limit = 10)
+    @GetMapping("/noParam")
+    @MethodRateLimit(limit = 10000000)
     public void noParam(){
+        System.out.println("拦截完毕。。。。");
+    }
+
+    @GetMapping("/no")
+    public void no(){
         System.out.println("拦截完毕。。。。");
     }
 }

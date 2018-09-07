@@ -28,5 +28,5 @@ public class AbstractDataBaseRateLimiter implements RateLimiter {
     public void tokenConsume(String key, long limit) { }
 
     @Override
-    public void setTokenLimit() { }
+    public void tokenLimitIncreaseData() { }
 }

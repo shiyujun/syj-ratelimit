@@ -4,7 +4,6 @@ import com.syj.ratelimit.RateLimiter;
 import com.syj.util.Const;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.Executors;
@@ -17,7 +16,6 @@ import java.util.concurrent.TimeUnit;
  * @创建时间 2018/09/05
  * @描述
  */
-@Slf4j
 @RequiredArgsConstructor
 public class TokenBucketAlgorithm implements RateLimiterAlgorithm {
 
@@ -32,8 +30,6 @@ public class TokenBucketAlgorithm implements RateLimiterAlgorithm {
 
     @PostConstruct
     private void init(){
-
-        log.info("setTokenLimit...");
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(()-> rateLimiter.setTokenLimit(), 0, Const.TOKEN_BUCKET_TIME_INTERVAL, TimeUnit.MILLISECONDS);
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(()-> rateLimiter.tokenLimitIncreaseData(), 0, Const.TOKEN_BUCKET_TIME_INTERVAL, TimeUnit.MILLISECONDS);
     }
 }

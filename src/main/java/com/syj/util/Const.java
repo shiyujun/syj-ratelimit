@@ -11,7 +11,12 @@ public class Const {
     /**
      * 配置rateLimit的前缀
      */
-    public static final String PREFIX="syj.rateLimit";
+    public static final String PREFIX="syj-rateLimit";
+
+    /**
+     * 自定义拦截方式时的key
+     */
+    public static final String CUSTOM="syj-rateLimit-custom";
 
     /**--------------------限流算法为默认计数器方法时的配置-----------------------**/
     /**
