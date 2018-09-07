@@ -3,15 +3,15 @@ package com.syj.ratelimit;
 
 
 
-public abstract class RateLimiter {
+public interface  RateLimiter {
 
-    public abstract void counterConsume(String key, long limit);
+    public  void counterConsume(String key, long limit);
 
-    public abstract void counterClear();
+    public  void counterClear();
 
-    public abstract void tokenConsume(String key, long limit);
+    public  void tokenConsume(String key, long limit);
 
-    public abstract void setTokenLimit();
+    public  void setTokenLimit();
 
 
 
