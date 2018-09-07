@@ -8,13 +8,18 @@ import com.syj.algorithm.TokenBucketAlgorithm;
 import com.syj.ratelimit.RateLimiter;
 import com.syj.ratelimit.impl.DataBaseRateLimiter;
 import com.syj.ratelimit.impl.MapRateLimiter;
+import com.syj.ratelimit.impl.RedisRateLimiter;
 import com.syj.util.Const;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.redis.core.RedisTemplate;
+
+import javax.sql.DataSource;
 
 
 /**
@@ -35,12 +40,16 @@ public class ApplicationConfiguration {
         return new AnnotationAspect();
     }
 
+    @ConditionalOnClass(RedisTemplate.class)
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "redis")
     public static class RedisConfiguration {
 
-
+        @Bean
+        public RateLimiter rateLimiter() {
+            return new RedisRateLimiter();
+        }
     }
-
+    @ConditionalOnClass(DataSource.class)
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "sql")
     @MapperScan("com.syj.dao")
     public static class SpringDataConfiguration {
