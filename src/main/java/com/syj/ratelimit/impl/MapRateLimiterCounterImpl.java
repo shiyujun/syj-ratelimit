@@ -3,7 +3,6 @@ package com.syj.ratelimit.impl;
 import com.syj.exception.BusinessErrorEnum;
 import com.syj.exception.BusinessException;
 import com.syj.ratelimit.abs.AbstractMapRateLimiter;
-import com.syj.util.RateLimiterUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;

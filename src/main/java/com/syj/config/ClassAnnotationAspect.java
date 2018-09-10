@@ -2,7 +2,6 @@ package com.syj.config;
 
 import com.syj.algorithm.RateLimiterAlgorithm;
 import com.syj.annotation.ClassRateLimit;
-import com.syj.annotation.MethodRateLimit;
 import com.syj.util.RateLimiterUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -27,24 +26,19 @@ public class ClassAnnotationAspect {
 
 
 
-    /**
-     * 方法拦截注解切点
-     * @param classRateLimit
-     */
-    @Pointcut("@annotation(classRateLimit)")
+
+    @Pointcut("@within(classRateLimit)")
     public void annotationPointcut(ClassRateLimit classRateLimit) {
-
     }
 
-    /**
-     * 被@MethodRateLimit注解标识的方法被调用
-     * @param joinPoint
-     * @param classRateLimit
-     */
-    @Before("annotationPointcut(classRateLimit)")
+
+
+    @Before("@within(classRateLimit)")
     public void doBefore(JoinPoint joinPoint, ClassRateLimit classRateLimit) {
-        System.out.println("-----------");
+        String key= RateLimiterUtil.getRateKey(joinPoint,classRateLimit.checkType());
+        rateLimiterAlgorithm.consume(key,classRateLimit.limit());
     }
+
 
 
 }

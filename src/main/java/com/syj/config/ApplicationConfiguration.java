@@ -43,6 +43,7 @@ public class ApplicationConfiguration {
         return new ClassAnnotationAspect();
     }
 
+
     @ConditionalOnClass(RedisTemplate.class)
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "redis")
     public static class RedisConfiguration {

@@ -4,7 +4,6 @@ import com.syj.ratelimit.RateLimiter;
 import com.syj.util.Const;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.Executors;
