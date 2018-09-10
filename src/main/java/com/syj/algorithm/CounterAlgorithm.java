@@ -4,6 +4,9 @@ import com.syj.ratelimit.RateLimiter;
 import com.syj.util.Const;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.Executors;
@@ -16,8 +19,10 @@ import java.util.concurrent.TimeUnit;
  * @创建时间 2018/09/05
  * @描述 计数器法限流
  */
-
+@Service
+@DependsOn("rateLimiter")
 @RequiredArgsConstructor
+@ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "counter", matchIfMissing = true)
 public class CounterAlgorithm implements RateLimiterAlgorithm {
     @NonNull
     private RateLimiter rateLimiter;

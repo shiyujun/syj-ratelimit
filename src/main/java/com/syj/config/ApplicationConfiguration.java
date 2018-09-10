@@ -12,6 +12,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -30,18 +31,10 @@ import javax.sql.DataSource;
  */
 @Slf4j
 @Configuration
+@ComponentScan(basePackages="com.syj")
 public class ApplicationConfiguration {
 
 
-
-    @Bean
-    public MethodAnnotationAspect methodAnnotationAspect(){
-        return new MethodAnnotationAspect();
-    }
-    @Bean
-    public ClassAnnotationAspect classAnnotationAspect(){
-        return new ClassAnnotationAspect();
-    }
 
 
     @ConditionalOnClass(RedisTemplate.class)
@@ -101,22 +94,4 @@ public class ApplicationConfiguration {
 
     }
 
-
-    @DependsOn("rateLimiter")
-    @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "token")
-    public static class TokenBucketConfiguration {
-        @Bean
-        public RateLimiterAlgorithm rateLimiterAlgorithm(RateLimiter rateLimiter) {
-            return new TokenBucketAlgorithm(rateLimiter);
-        }
-    }
-
-    @DependsOn("rateLimiter")
-    @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "counter", matchIfMissing = true)
-    public static class CounterConfiguration {
-        @Bean
-        public RateLimiterAlgorithm rateLimiterAlgorithm(RateLimiter rateLimiter) {
-            return new CounterAlgorithm(rateLimiter);
-        }
-    }
 }
