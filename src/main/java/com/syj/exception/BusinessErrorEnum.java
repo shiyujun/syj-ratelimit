@@ -9,7 +9,9 @@ package com.syj.exception;
  */
 public enum BusinessErrorEnum {
 
-    TOO_MANY_REQUESTS("syj-rateLimit say: You have made too many requests,please try again later!!!");
+    TOO_MANY_REQUESTS("syj-rateLimit say: You have made too many requests,please try again later!!!"),
+    USER_NOT_DOUND("syj-rateLimit say: not found user info ,please check request.getUserPrincipal().getName()!!!"),
+    CUSTOM_NOT_DOUND("syj-rateLimit say: not found custom info ,please check request.getAttribute('syj-rateLimit-custom')!!!");
 
     private final String msg;
 
