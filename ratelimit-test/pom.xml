@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <artifactId>syj-ratelimit</artifactId>
-            <groupId>com.shiyujun</groupId>
+            <groupId>cn.org.zhixiang</groupId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
