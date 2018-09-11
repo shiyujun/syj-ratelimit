@@ -1,5 +1,5 @@
 -- 获取入参
-local step = KEYS[1];
+local step = tonumber(KEYS[1]);
 -- 获取所有以_key结尾的key
 local keyList=redis.call("keys","*_key")
 local nowValue;

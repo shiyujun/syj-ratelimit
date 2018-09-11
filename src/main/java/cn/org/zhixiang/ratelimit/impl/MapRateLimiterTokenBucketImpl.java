@@ -19,8 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class MapRateLimiterTokenBucketImpl extends AbstractMapRateLimiter {
 
-    public volatile Map<String,Long> map=new ConcurrentHashMap<String, Long>();
-    public volatile Map<String,Long> keyMaxMap=new ConcurrentHashMap<String, Long>();
+    private volatile Map<String,Long> map=new ConcurrentHashMap<String, Long>();
+    private volatile Map<String,Long> keyMaxMap=new ConcurrentHashMap<String, Long>();
 
     @Override
     public void tokenConsume(String key, long limit) {

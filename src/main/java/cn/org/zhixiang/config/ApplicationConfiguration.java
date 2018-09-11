@@ -36,22 +36,18 @@ public class ApplicationConfiguration {
 
 
 
-    @ConditionalOnClass(RedisTemplate.class)
+
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "redis")
     public static class RedisConfiguration {
 
-        @Bean("redisTemplate")
-        public StringRedisTemplate redisTemplate(RedisConnectionFactory connectionFactory) {
-            return new StringRedisTemplate(connectionFactory);
-        }
         @Bean(name = "rateLimiter")
         @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "token")
         public RateLimiter tokenRateLimiter() {
-            DefaultRedisScript<String> consumeRedisScript=new DefaultRedisScript();
-            consumeRedisScript.setResultType(String.class);
+            DefaultRedisScript<Long> consumeRedisScript=new DefaultRedisScript();
+            consumeRedisScript.setResultType(Long.class);
             consumeRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-TokenBucket-Consume.lua")));
-            DefaultRedisScript<String> increaseRedisScript=new DefaultRedisScript();
-            increaseRedisScript.setResultType(String.class);
+            DefaultRedisScript<Long> increaseRedisScript=new DefaultRedisScript();
+            increaseRedisScript.setResultType(Long.class);
             increaseRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-TokenBucket-Increase.lua")));
             return new RedisRateLimiterTokenBucketImpl(consumeRedisScript,increaseRedisScript);
         }
@@ -59,8 +55,8 @@ public class ApplicationConfiguration {
         @Bean(name = "rateLimiter")
         @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "counter", matchIfMissing = true)
         public RateLimiter counterRateLimiter() {
-            DefaultRedisScript<String> redisScript=new DefaultRedisScript();
-            redisScript.setResultType(String.class);
+            DefaultRedisScript<Long> redisScript=new DefaultRedisScript();
+            redisScript.setResultType(Long.class);
             redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-counter.lua")));
             return new RedisRateLimiterCounterImpl(redisScript);
         }

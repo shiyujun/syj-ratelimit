@@ -25,20 +25,21 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class RedisRateLimiterCounterImpl extends AbstractRedisRateLimiter {
 
 
-    private DefaultRedisScript<String> redisScript;
+    private DefaultRedisScript<Long> redisScript;
 
-    public RedisRateLimiterCounterImpl(DefaultRedisScript<String> redisScript){
+    public RedisRateLimiterCounterImpl(DefaultRedisScript<Long> redisScript){
         this.redisScript=redisScript;
     }
 
     @Override
     public void counterConsume(String key, long limit) {
         log.info("使用计数器算法拦截了key为{}的请求.拦截信息存储在Redis中",key);
+
         List<Object> keyList = new ArrayList();
         keyList.add(key);
-        keyList.add(limit);
-        keyList.add(Const.REFRESH_INTERVAL);
-        String result=redisTemplate.execute(redisScript,keyList,null).toString();
+        keyList.add(limit+"");
+        keyList.add(Const.REFRESH_INTERVAL+"");
+        String result=redisTemplate.execute(redisScript,keyList,keyList).toString();
         if("-1".equals(result)){
             throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
         }

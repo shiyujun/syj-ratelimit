@@ -25,11 +25,11 @@ public class RedisRateLimiterTokenBucketImpl extends AbstractRedisRateLimiter {
 
 
 
-    private DefaultRedisScript<String> consumeRedisScript;
+    private DefaultRedisScript<Long> consumeRedisScript;
 
-    private DefaultRedisScript<String> increaseRedisScript;
+    private DefaultRedisScript<Long> increaseRedisScript;
 
-    public RedisRateLimiterTokenBucketImpl(DefaultRedisScript<String> consumeRedisScript,DefaultRedisScript<String> increaseRedisScript){
+    public RedisRateLimiterTokenBucketImpl(DefaultRedisScript<Long> consumeRedisScript,DefaultRedisScript<Long> increaseRedisScript){
         this.consumeRedisScript=consumeRedisScript;
         this.increaseRedisScript=increaseRedisScript;
     }
@@ -39,8 +39,8 @@ public class RedisRateLimiterTokenBucketImpl extends AbstractRedisRateLimiter {
         log.info("使用令牌桶算法拦截了key为{}的请求.拦截信息存储在Redis中",key);
         List<Object> keyList = new ArrayList();
         keyList.add(key);
-        keyList.add(limit);
-        String result=redisTemplate.execute(consumeRedisScript,keyList,null).toString();
+        keyList.add(limit+"");
+        String result=redisTemplate.execute(consumeRedisScript,keyList,keyList).toString();
         if("-1".equals(result)){
             throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
         }
@@ -52,8 +52,8 @@ public class RedisRateLimiterTokenBucketImpl extends AbstractRedisRateLimiter {
     public void tokenLimitIncreaseData() {
         log.info("令牌桶增加数据");
         List<Object> keyList = new ArrayList();
-        keyList.add(Const.TOKEN_BUCKET_STEP_NUM);
-        redisTemplate.execute(increaseRedisScript,keyList,null).toString();
+        keyList.add(Const.TOKEN_BUCKET_STEP_NUM+"");
+        redisTemplate.execute(increaseRedisScript,keyList,keyList).toString();
 
     }
 }

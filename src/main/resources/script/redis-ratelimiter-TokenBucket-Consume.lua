@@ -1,6 +1,6 @@
 -- ????
 local key = KEYS[1];
-local limit = KEYS[2];
+local limit = tonumber(KEYS[2]);
 
 key=key..'_key';
 -- ????key
