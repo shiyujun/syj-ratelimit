@@ -34,13 +34,12 @@ public class RedisRateLimiterCounterImpl extends AbstractRedisRateLimiter {
     @Override
     public void counterConsume(String key, long limit) {
         log.info("使用计数器算法拦截了key为{}的请求.拦截信息存储在Redis中",key);
-
         List<Object> keyList = new ArrayList();
         keyList.add(key);
         keyList.add(limit+"");
         keyList.add(Const.REFRESH_INTERVAL+"");
         String result=redisTemplate.execute(redisScript,keyList,keyList).toString();
-        if("-1".equals(result)){
+        if(Const.REDIS_ERROR.contains(result)){
             throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
         }
     }

@@ -1,9 +1,7 @@
 server:
     port: 8888
 
-syj-rateLimit:
-  db: redis
-    #algorithm: token
+
 spring:
   redis:
     host: 10.0.20.
@@ -15,3 +13,4 @@ spring:
       max-idle: 8
       min-idle: 0
     timeout: 1000
+

@@ -25,35 +25,33 @@ public class DataBaseRateLimiterTokenBucketImpl extends AbstractDataBaseRateLimi
     @Override
     public void tokenConsume(String key, long limit) {
         log.info("使用令牌桶算法拦截了key为{}的请求.拦截信息存储在数据库中",key);
-        Integer value=baseMapper.getKey(key);
-        if(value>-1){
-            if(value<=0){
+        TokenLimit tokenLimit=baseMapper.getKey(key);
+        long nowTime=System.currentTimeMillis()/1000;
+        if(tokenLimit!=null){
+            if((nowTime-tokenLimit.getLastPutTime())> Const.TOKEN_BUCKET_TIME_INTERVAL){
+                if(tokenLimit.getValue()>=limit){
+                    long maxValue=(nowTime-tokenLimit.getLastPutTime())/Const.TOKEN_BUCKET_TIME_INTERVAL*Const.TOKEN_BUCKET_STEP_NUM;
+                    if(maxValue>limit){
+                        tokenLimit.setValue(limit);
+                    }else{
+                        tokenLimit.setValue(maxValue);
+                    }
+                    tokenLimit.setLastPutTime(nowTime);
+                }
+            }
+            if(tokenLimit.getValue()<=0){
                 throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
             }else{
-                baseMapper.updateValue(key,value-1);
+                tokenLimit.setValue(tokenLimit.getValue()-1);
             }
         }else{
-            baseMapper.insertValueAndLimit(key,limit);
+            tokenLimit=new TokenLimit(key,limit-1,nowTime);
+            baseMapper.insert(tokenLimit);
 
         }
+
     }
 
-    @Override
-    public void tokenLimitIncreaseData() {
-        log.info("令牌桶增加数据");
-        List<TokenLimit> tokenLimitList=baseMapper.getAll();
-        for (TokenLimit tokenLimit:tokenLimitList){
-            long maxValue=tokenLimit.getLimit();
-            long nowValue=tokenLimit.getValue()+ Const.TOKEN_BUCKET_STEP_NUM;
-            if(maxValue>nowValue){
-                tokenLimit.setValue(nowValue);
-                log.info(""+nowValue);
-                log.info(""+tokenLimit.getValue());
-            }else {
-                tokenLimit.setValue(maxValue);
-            }
-        }
-        baseMapper.batchUpdate(tokenLimitList);
-    }
+
     
 }

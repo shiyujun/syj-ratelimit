@@ -13,5 +13,11 @@ import lombok.Data;
 public class TokenLimit {
     private String key;
     private long value;
-    private long limit;
+    private long lastPutTime;
+
+    public TokenLimit(String key,long value,long lastPutTime){
+        this.key=key;
+        this.value=value;
+        this.lastPutTime=lastPutTime;
+    }
 }

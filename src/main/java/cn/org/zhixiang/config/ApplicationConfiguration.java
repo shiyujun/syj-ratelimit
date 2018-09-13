@@ -33,10 +33,6 @@ import javax.sql.DataSource;
 @ComponentScan(basePackages="cn.org.zhixiang")
 public class ApplicationConfiguration {
 
-
-
-
-
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "redis")
     public static class RedisConfiguration {
 
@@ -46,10 +42,7 @@ public class ApplicationConfiguration {
             DefaultRedisScript<Long> consumeRedisScript=new DefaultRedisScript();
             consumeRedisScript.setResultType(Long.class);
             consumeRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-TokenBucket-Consume.lua")));
-            DefaultRedisScript<Long> increaseRedisScript=new DefaultRedisScript();
-            increaseRedisScript.setResultType(Long.class);
-            increaseRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-TokenBucket-Increase.lua")));
-            return new RedisRateLimiterTokenBucketImpl(consumeRedisScript,increaseRedisScript);
+            return new RedisRateLimiterTokenBucketImpl(consumeRedisScript);
         }
 
         @Bean(name = "rateLimiter")

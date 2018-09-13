@@ -3,6 +3,7 @@ package cn.org.zhixiang.ratelimit.impl;
 import cn.org.zhixiang.exception.BusinessErrorEnum;
 import cn.org.zhixiang.exception.BusinessException;
 import cn.org.zhixiang.ratelimit.abs.AbstractMapRateLimiter;
+import cn.org.zhixiang.util.Const;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -18,11 +19,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class MapRateLimiterCounterImpl extends AbstractMapRateLimiter {
 
-    public volatile Map<String,Long> map=new ConcurrentHashMap<String, Long>();
-
+    private static volatile Map<String,Long> map=new ConcurrentHashMap<String, Long>();
+    private static volatile long lastClearTime=0;
     @Override
     public void counterConsume(String key, long limit) {
         log.info("使用计数器算法拦截了key为{}的请求.拦截信息存储在Map中",key);
+        long nowTime=System.currentTimeMillis()/1000;
+        if((nowTime-lastClearTime)> Const.REFRESH_INTERVAL){
+            map.clear();
+            lastClearTime=nowTime;
+        }
         if(map.containsKey(key)){
             if(map.get(key)<limit){
                 map.replace(key,map.get(key),map.get(key)+1);
@@ -33,10 +39,6 @@ public class MapRateLimiterCounterImpl extends AbstractMapRateLimiter {
             map.put(key,1L);
         }
     }
-    @Override
-    public void counterClear(){
-        log.info("初始化计数器");
-        map.clear();
-    }
+
 
 }

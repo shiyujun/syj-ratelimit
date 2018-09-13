@@ -19,12 +19,9 @@ public class AbstractRedisRateLimiter implements RateLimiter {
     @Override
     public void counterConsume(String key, long limit) { }
 
-    @Override
-    public void counterClear() { }
 
     @Override
     public void tokenConsume(String key, long limit) { }
 
-    @Override
-    public void tokenLimitIncreaseData() { }
+
 }

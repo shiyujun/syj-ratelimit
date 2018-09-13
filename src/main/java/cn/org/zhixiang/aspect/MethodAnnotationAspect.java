@@ -1,4 +1,4 @@
-package cn.org.zhixiang.config;
+package cn.org.zhixiang.aspect;
 
 import cn.org.zhixiang.algorithm.RateLimiterAlgorithm;
 import cn.org.zhixiang.annotation.MethodRateLimit;

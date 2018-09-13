@@ -1,5 +1,6 @@
-package cn.org.zhixiang.algorithm;
+package cn.org.zhixiang.algorithm.impl;
 
+import cn.org.zhixiang.algorithm.RateLimiterAlgorithm;
 import cn.org.zhixiang.ratelimit.RateLimiter;
 import cn.org.zhixiang.util.Const;
 import lombok.NonNull;
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @DependsOn("rateLimiter")
 @RequiredArgsConstructor
 @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "counter", matchIfMissing = true)
-public class CounterAlgorithm implements RateLimiterAlgorithm {
+public class CounterAlgorithmImpl implements RateLimiterAlgorithm {
     @NonNull
     private RateLimiter rateLimiter;
 
@@ -32,11 +33,6 @@ public class CounterAlgorithm implements RateLimiterAlgorithm {
         rateLimiter.counterConsume(key,limit);
     }
 
-    @PostConstruct
-    private  void init(){
-        // 参数：1、任务体 2、首次执行的延时时间
-        //      3、任务执行间隔 4、间隔时间单位
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(()-> rateLimiter.counterClear(), 0, Const.REFRESH_INTERVAL, TimeUnit.SECONDS);
-    }
+
 
 }

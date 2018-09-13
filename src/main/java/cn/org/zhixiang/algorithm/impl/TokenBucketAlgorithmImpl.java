@@ -1,5 +1,6 @@
-package cn.org.zhixiang.algorithm;
+package cn.org.zhixiang.algorithm.impl;
 
+import cn.org.zhixiang.algorithm.RateLimiterAlgorithm;
 import cn.org.zhixiang.ratelimit.RateLimiter;
 import cn.org.zhixiang.util.Const;
 import lombok.NonNull;
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @DependsOn("rateLimiter")
 @RequiredArgsConstructor
 @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "token")
-public class TokenBucketAlgorithm implements RateLimiterAlgorithm {
+public class TokenBucketAlgorithmImpl implements RateLimiterAlgorithm {
 
     @NonNull
     private RateLimiter rateLimiter;
@@ -34,8 +35,4 @@ public class TokenBucketAlgorithm implements RateLimiterAlgorithm {
         rateLimiter.tokenConsume(key,limit);
     }
 
-    @PostConstruct
-    private void init(){
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(()-> rateLimiter.tokenLimitIncreaseData(), 0, Const.TOKEN_BUCKET_TIME_INTERVAL, TimeUnit.MILLISECONDS);
-    }
 }
