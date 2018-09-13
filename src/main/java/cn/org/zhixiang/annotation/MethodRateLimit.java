@@ -21,9 +21,9 @@ public @interface MethodRateLimit {
 
 
     /**
-     * 限流次数。默认值1000
+     * 限流次数。默认值10
      */
-    public long limit() default 1000;
+    public long limit() default 10;
 
 
 }

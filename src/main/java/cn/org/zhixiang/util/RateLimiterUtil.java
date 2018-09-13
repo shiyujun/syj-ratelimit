@@ -1,8 +1,8 @@
 package cn.org.zhixiang.util;
 
+import cn.org.zhixiang.annotation.CheckTypeEnum;
 import cn.org.zhixiang.exception.BusinessErrorEnum;
 import cn.org.zhixiang.exception.BusinessException;
-import cn.org.zhixiang.annotation.CheckTypeEnum;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.web.context.request.RequestContextHolder;

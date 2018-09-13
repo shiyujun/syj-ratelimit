@@ -13,13 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 
-public class AbstractDataBaseRateLimiter implements RateLimiter {
+public abstract class AbstractDataBaseRateLimiter implements RateLimiter {
 
     @Autowired
-    protected BaseMapper baseMapper;
+    public BaseMapper baseMapper;
 
     @Override
-    public void counterConsume(String key, long limit) { }
+    public  void counterConsume(String key, long limit) { }
 
 
 

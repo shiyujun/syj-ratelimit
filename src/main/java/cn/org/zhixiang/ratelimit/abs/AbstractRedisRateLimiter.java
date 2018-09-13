@@ -11,7 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
  * @创建时间 2018/09/05
  * @描述
  */
-public class AbstractRedisRateLimiter implements RateLimiter {
+public abstract class AbstractRedisRateLimiter implements RateLimiter {
 
     @Autowired
     protected RedisTemplate redisTemplate;

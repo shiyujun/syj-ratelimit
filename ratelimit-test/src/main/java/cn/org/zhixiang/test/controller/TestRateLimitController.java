@@ -5,7 +5,9 @@ import cn.org.zhixiang.annotation.MethodRateLimit;
 import cn.org.zhixiang.test.service.TestService;
 import cn.org.zhixiang.util.Const;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 

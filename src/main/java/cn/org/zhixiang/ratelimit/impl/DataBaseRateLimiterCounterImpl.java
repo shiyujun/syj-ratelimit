@@ -18,11 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DataBaseRateLimiterCounterImpl extends AbstractDataBaseRateLimiter {
 
-    private static volatile long lastClearTime=0;
+
 
     @Override
     public void counterConsume(String key, long limit) {
-        log.info("使用计数器算法拦截了key为{}的请求.拦截信息存储在数据库中",key);
+
         TokenLimit tokenLimit=baseMapper.getKey(key);
         long nowTime=System.currentTimeMillis()/1000;
         if(tokenLimit!=null){
@@ -36,10 +36,10 @@ public class DataBaseRateLimiterCounterImpl extends AbstractDataBaseRateLimiter 
                 throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
             }
         }else{
-            new TokenLimit(key,1,nowTime);
+            tokenLimit=new TokenLimit(key,1,nowTime);
         }
         baseMapper.insert(tokenLimit);
-
+        log.info("使用计数器算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,Const.REFRESH_INTERVAL,tokenLimit.getValue(),limit);
     }
 
 

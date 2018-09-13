@@ -4,15 +4,11 @@ import cn.org.zhixiang.exception.BusinessErrorEnum;
 import cn.org.zhixiang.exception.BusinessException;
 import cn.org.zhixiang.ratelimit.abs.AbstractRedisRateLimiter;
 import cn.org.zhixiang.util.Const;
-import com.sun.istack.internal.NotNull;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * describe:

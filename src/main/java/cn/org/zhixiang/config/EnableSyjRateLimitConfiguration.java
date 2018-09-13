@@ -1,8 +1,8 @@
 package cn.org.zhixiang.config;
 
 
-import cn.org.zhixiang.ratelimit.impl.*;
 import cn.org.zhixiang.ratelimit.RateLimiter;
+import cn.org.zhixiang.ratelimit.impl.*;
 import cn.org.zhixiang.util.Const;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
@@ -12,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 
@@ -31,7 +28,7 @@ import javax.sql.DataSource;
 @Slf4j
 @Configuration
 @ComponentScan(basePackages="cn.org.zhixiang")
-public class ApplicationConfiguration {
+public class EnableSyjRateLimitConfiguration {
 
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "redis")
     public static class RedisConfiguration {
@@ -41,7 +38,7 @@ public class ApplicationConfiguration {
         public RateLimiter tokenRateLimiter() {
             DefaultRedisScript<Long> consumeRedisScript=new DefaultRedisScript();
             consumeRedisScript.setResultType(Long.class);
-            consumeRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-TokenBucket-Consume.lua")));
+            consumeRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-tokenBucket.lua")));
             return new RedisRateLimiterTokenBucketImpl(consumeRedisScript);
         }
 
@@ -56,9 +53,9 @@ public class ApplicationConfiguration {
 
     }
 
+    @MapperScan("cn.org.zhixiang.dao")
     @ConditionalOnClass(DataSource.class)
     @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "sql")
-    @MapperScan("com.syj.dao")
     public static class SpringDataConfiguration {
 
         @Bean(name = "rateLimiter")

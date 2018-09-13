@@ -1,7 +1,7 @@
 package cn.org.zhixiang.annotation;
 
 
-import cn.org.zhixiang.config.ApplicationConfiguration;
+import cn.org.zhixiang.config.EnableSyjRateLimitConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -15,7 +15,7 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(ApplicationConfiguration.class)
+@Import(EnableSyjRateLimitConfiguration.class)
 @Documented
 @Inherited
 public @interface EnableSyjRateLimit {

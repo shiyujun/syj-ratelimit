@@ -4,9 +4,6 @@ import cn.org.zhixiang.entity.TokenLimit;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-
-import java.util.List;
 
 /**
  * describe:
@@ -15,6 +12,7 @@ import java.util.List;
  * @创建时间 2018/09/06
  * @描述
  */
+
 public interface BaseMapper {
 
 
@@ -22,7 +20,7 @@ public interface BaseMapper {
     public TokenLimit getKey(@Param("key") String key);
 
 
-    @Insert("insert into syj_rate_limit set `key`=#{key} ,`value`=#{value},`lastPutTime`=#{lastPutTime} on duplicate key update")
+    @Insert("REPLACE into syj_rate_limit set `key`=#{key} ,`value`=#{value},`lastPutTime`=#{lastPutTime}")
     void insert(TokenLimit tokenLimit);
 
 

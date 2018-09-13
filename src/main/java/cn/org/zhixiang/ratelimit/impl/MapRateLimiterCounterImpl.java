@@ -6,9 +6,6 @@ import cn.org.zhixiang.ratelimit.abs.AbstractMapRateLimiter;
 import cn.org.zhixiang.util.Const;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * describe:
  *
@@ -19,25 +16,29 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class MapRateLimiterCounterImpl extends AbstractMapRateLimiter {
 
-    private static volatile Map<String,Long> map=new ConcurrentHashMap<String, Long>();
-    private static volatile long lastClearTime=0;
+
+
     @Override
     public void counterConsume(String key, long limit) {
-        log.info("使用计数器算法拦截了key为{}的请求.拦截信息存储在Map中",key);
+
         long nowTime=System.currentTimeMillis()/1000;
-        if((nowTime-lastClearTime)> Const.REFRESH_INTERVAL){
-            map.clear();
-            lastClearTime=nowTime;
-        }
         if(map.containsKey(key)){
-            if(map.get(key)<limit){
-                map.replace(key,map.get(key),map.get(key)+1);
+            long value=map.get(key);
+            long lastClearTime=lastPutTimeMap.get(key);
+            if((nowTime-lastClearTime)> Const.REFRESH_INTERVAL){
+                lastPutTimeMap.put(key,nowTime);
+                value=0;
+            }
+            if(value<limit){
+                map.put(key,value+1);
             }else{
                 throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
             }
         }else{
             map.put(key,1L);
+            lastPutTimeMap.put(key,nowTime);
         }
+        log.info("使用计数器算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,Const.REFRESH_INTERVAL,map.get(key),limit);
     }
 
 

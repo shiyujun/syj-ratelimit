@@ -33,11 +33,11 @@ public class Const {
     /**
      * 向令牌桶中添加数据的时间间隔,以秒为单位。默认值1秒
      */
-    public static final long TOKEN_BUCKET_TIME_INTERVAL=1;
+    public static final long TOKEN_BUCKET_TIME_INTERVAL=10;
     /**
      * 每次为令牌桶中添加的令牌数量。默认值100个
      */
-    public static final long TOKEN_BUCKET_STEP_NUM=100;
+    public static final long TOKEN_BUCKET_STEP_NUM=5;
 
 
 }
