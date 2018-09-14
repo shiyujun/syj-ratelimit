@@ -21,7 +21,7 @@ public class MapRateLimiterCounterImpl extends AbstractMapRateLimiter {
 
 
     @Override
-    public void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
+    public synchronized void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
 
         long nowTime=System.currentTimeMillis()/1000;
         AtomicLong value=map.get(key);

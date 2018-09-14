@@ -22,14 +22,14 @@ public class MapRateLimiterTokenBucketImpl extends AbstractMapRateLimiter {
 
 
     @Override
-    public void tokenConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
+    public synchronized void tokenConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
 
         long nowTime=System.currentTimeMillis()/1000;
         AtomicLong nowValue=map.get(key);
         if(nowValue!=null){
             long lastClearTime=lastPutTimeMap.get(key);
             if((nowTime-lastClearTime)> tokenBucketTimeInterval){
-                long maxValue=(nowTime-lastClearTime)/tokenBucketTimeInterval*tokenBucketStepNum;
+                long maxValue=nowValue.get()+(nowTime-lastClearTime)/tokenBucketTimeInterval*tokenBucketStepNum;
                 if(maxValue>limit){
                     nowValue.set(limit);
                 }else{

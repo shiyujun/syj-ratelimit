@@ -21,7 +21,7 @@ public class DataBaseRateLimiterCounterImpl extends AbstractDataBaseRateLimiter 
 
 
     @Override
-    public void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
+    public  void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
 
         TokenLimit tokenLimit=baseMapper.getKey(key);
         long nowTime=System.currentTimeMillis()/1000;

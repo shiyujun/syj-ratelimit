@@ -5,7 +5,7 @@ local step = tonumber(KEYS[3]);
 local interval = tonumber(KEYS[4]);
 local nowTime=tonumber(KEYS[5]);
 
-local lastClearTimeKey='syj-rateLimiter-lastClearTime'
+local lastClearTimeKey='syj-rateLimiter-lastClearTime'..key
 local lastClearTime=redis.call('GET',lastClearTimeKey);
 local hasKey = redis.call('EXISTS',key);
 
@@ -13,7 +13,7 @@ if hasKey == 1 then
     local diff = tonumber(nowTime)-tonumber(lastClearTime);
     local value = tonumber(redis.call('GET',key));
     if  diff > interval then
-            local maxValue = diff/interval*step
+            local maxValue = value+diff/interval*step
             if maxValue > limit then
                 value = limit;
             else

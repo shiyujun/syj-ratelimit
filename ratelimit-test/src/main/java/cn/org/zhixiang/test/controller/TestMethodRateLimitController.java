@@ -22,9 +22,20 @@ public class TestMethodRateLimitController {
         System.out.println("拦截完毕。。。。");
     }
 
-    @MethodRateLimit
+    @MethodRateLimit(limit = 1000000000,tokenBucketTimeInterval = 5,tokenBucketStepNum =1000000 )
     @GetMapping("/noParam")
-    public void noParam(){
+    public void testNoParamMethod(){
+        System.out.println("拦截完毕。。。。");
+    }
+
+    @MethodRateLimit(limit = 1000,tokenBucketTimeInterval = 995,tokenBucketStepNum =1 )
+    @GetMapping("/tokenBoundary")
+    public void tokenBoundary3(){
+        System.out.println("拦截完毕。。。。");
+    }
+    @MethodRateLimit(limit = 1000,refreshInterval = 1111)
+    @GetMapping("/countBoundary")
+    public void countBoundary4(){
         System.out.println("拦截完毕。。。。");
     }
 

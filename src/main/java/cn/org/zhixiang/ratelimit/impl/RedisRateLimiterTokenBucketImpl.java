@@ -36,12 +36,12 @@ public class RedisRateLimiterTokenBucketImpl extends AbstractRedisRateLimiter {
         log.info("使用令牌桶算法拦截了key为{}的请求.拦截信息存储在Redis中",key);
         List<Object> keyList = new ArrayList();
         keyList.add(key);
-        keyList.add(limit);
-        keyList.add(tokenBucketStepNum);
-        keyList.add(tokenBucketTimeInterval);
-        keyList.add(System.currentTimeMillis()/1000);
+        keyList.add(limit+"");
+        keyList.add(tokenBucketStepNum+"");
+        keyList.add(tokenBucketTimeInterval+"");
+        keyList.add(System.currentTimeMillis()/1000+"");
         String result=redisTemplate.execute(redisScript,keyList,keyList).toString();
-        if(Const.REDIS_ERROR.contains(result)){
+        if(Const.REDIS_ERROR.equals(result)){
             throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
         }
 

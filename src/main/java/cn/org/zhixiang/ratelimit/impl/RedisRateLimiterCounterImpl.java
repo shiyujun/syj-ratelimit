@@ -32,10 +32,10 @@ public class RedisRateLimiterCounterImpl extends AbstractRedisRateLimiter {
         log.info("使用计数器算法拦截了key为{}的请求.拦截信息存储在Redis中",key);
         List<Object> keyList = new ArrayList();
         keyList.add(key);
-        keyList.add(limit);
-        keyList.add(lrefreshInterval);
+        keyList.add(limit+"");
+        keyList.add(lrefreshInterval+"");
         String result=redisTemplate.execute(redisScript,keyList,keyList).toString();
-        if(Const.REDIS_ERROR.contains(result)){
+        if(Const.REDIS_ERROR.equals(result)){
             throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
         }
     }
