@@ -25,8 +25,8 @@ public class CounterAlgorithmImpl implements RateLimiterAlgorithm {
     private RateLimiter rateLimiter;
 
 
-    public void consume(String key, long limit){
-        rateLimiter.counterConsume(key,limit);
+    public void consume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval){
+        rateLimiter.counterConsume(key,limit,lrefreshInterval,tokenBucketStepNum,tokenBucketTimeInterval);
     }
 
 

@@ -44,7 +44,7 @@ public class MethodAnnotationAspect {
     @Before("annotationPointcut(methodRateLimit)")
     public void doBefore(JoinPoint joinPoint, MethodRateLimit methodRateLimit) {
         String key= RateLimiterUtil.getRateKey(joinPoint,methodRateLimit.checkType());
-        rateLimiterAlgorithm.consume(key,methodRateLimit.limit());
+        rateLimiterAlgorithm.consume(key,methodRateLimit.limit(),methodRateLimit.refreshInterval(),methodRateLimit.tokenBucketStepNum(),methodRateLimit.tokenBucketTimeInterval());
     }
 
 

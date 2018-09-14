@@ -20,14 +20,14 @@ public class MapRateLimiterTokenBucketImpl extends AbstractMapRateLimiter {
 
 
     @Override
-    public void tokenConsume(String key, long limit) {
+    public void tokenConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
 
         long nowTime=System.currentTimeMillis()/1000;
         if(map.containsKey(key)){
             long lastClearTime=lastPutTimeMap.get(key);
             long nowValue=map.get(key);
-            if((nowTime-lastClearTime)> Const.TOKEN_BUCKET_TIME_INTERVAL){
-                long maxValue=(nowTime-lastClearTime)/Const.TOKEN_BUCKET_TIME_INTERVAL*Const.TOKEN_BUCKET_STEP_NUM;
+            if((nowTime-lastClearTime)> tokenBucketTimeInterval){
+                long maxValue=(nowTime-lastClearTime)/tokenBucketTimeInterval*tokenBucketStepNum;
                 if(maxValue>limit){
                      nowValue=limit;
                 }else{
@@ -44,7 +44,7 @@ public class MapRateLimiterTokenBucketImpl extends AbstractMapRateLimiter {
             lastPutTimeMap.put(key,nowTime);
             map.put(key,limit-1);
         }
-        log.info("使用令牌桶算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,Const.TOKEN_BUCKET_TIME_INTERVAL,limit-map.get(key),limit);
+        log.info("使用令牌桶算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,tokenBucketTimeInterval,limit-map.get(key),limit);
     }
 
 

@@ -9,5 +9,5 @@ package cn.org.zhixiang.algorithm;
  */
 public interface RateLimiterAlgorithm {
 
-    public void consume(String key, long limit);
+    public void consume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval);
 }

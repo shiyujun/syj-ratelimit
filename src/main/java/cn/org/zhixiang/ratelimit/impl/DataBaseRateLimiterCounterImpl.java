@@ -21,12 +21,12 @@ public class DataBaseRateLimiterCounterImpl extends AbstractDataBaseRateLimiter 
 
 
     @Override
-    public void counterConsume(String key, long limit) {
+    public void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
 
         TokenLimit tokenLimit=baseMapper.getKey(key);
         long nowTime=System.currentTimeMillis()/1000;
         if(tokenLimit!=null){
-            if((nowTime-tokenLimit.getLastPutTime())> Const.REFRESH_INTERVAL){
+            if((nowTime-tokenLimit.getLastPutTime())>lrefreshInterval){
                 tokenLimit.setValue(0);
                 tokenLimit.setLastPutTime(nowTime);
             }
@@ -39,7 +39,7 @@ public class DataBaseRateLimiterCounterImpl extends AbstractDataBaseRateLimiter 
             tokenLimit=new TokenLimit(key,1,nowTime);
         }
         baseMapper.insert(tokenLimit);
-        log.info("使用计数器算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,Const.REFRESH_INTERVAL,tokenLimit.getValue(),limit);
+        log.info("使用计数器算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,lrefreshInterval,tokenLimit.getValue(),limit);
     }
 
 

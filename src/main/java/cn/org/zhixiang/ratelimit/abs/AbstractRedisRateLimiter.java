@@ -17,11 +17,11 @@ public abstract class AbstractRedisRateLimiter implements RateLimiter {
     protected RedisTemplate redisTemplate;
 
     @Override
-    public void counterConsume(String key, long limit) { }
+    public void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) { }
 
 
     @Override
-    public void tokenConsume(String key, long limit) { }
+    public void tokenConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) { }
 
 
 }

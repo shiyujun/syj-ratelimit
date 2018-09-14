@@ -32,13 +32,13 @@ public class RedisRateLimiterTokenBucketImpl extends AbstractRedisRateLimiter {
     }
 
     @Override
-    public void tokenConsume(String key, long limit) {
+    public void tokenConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
         log.info("使用令牌桶算法拦截了key为{}的请求.拦截信息存储在Redis中",key);
         List<Object> keyList = new ArrayList();
         keyList.add(key);
         keyList.add(limit);
-        keyList.add(Const.TOKEN_BUCKET_STEP_NUM);
-        keyList.add(Const.TOKEN_BUCKET_TIME_INTERVAL);
+        keyList.add(tokenBucketStepNum);
+        keyList.add(tokenBucketTimeInterval);
         keyList.add(System.currentTimeMillis()/1000);
         String result=redisTemplate.execute(redisScript,keyList,keyList).toString();
         if(Const.REDIS_ERROR.contains(result)){

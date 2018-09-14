@@ -38,7 +38,7 @@ public class ClassAnnotationAspect {
     @Before("@within(classRateLimit)")
     public void doBefore(JoinPoint joinPoint, ClassRateLimit classRateLimit) {
         String key= RateLimiterUtil.getRateKey(joinPoint,classRateLimit.checkType());
-        rateLimiterAlgorithm.consume(key,classRateLimit.limit());
+        rateLimiterAlgorithm.consume(key,classRateLimit.limit(),classRateLimit.refreshInterval(),classRateLimit.tokenBucketStepNum(),classRateLimit.tokenBucketTimeInterval());
     }
 
 

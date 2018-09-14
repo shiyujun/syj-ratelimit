@@ -21,12 +21,12 @@ public class DataBaseRateLimiterTokenBucketImpl extends AbstractDataBaseRateLimi
 
 
     @Override
-    public void tokenConsume(String key, long limit) {
+    public void tokenConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
         TokenLimit tokenLimit=baseMapper.getKey(key);
         long nowTime=System.currentTimeMillis()/1000;
         if(tokenLimit!=null){
-            if((nowTime-tokenLimit.getLastPutTime())> Const.TOKEN_BUCKET_TIME_INTERVAL){
-                long maxValue=(nowTime-tokenLimit.getLastPutTime())/Const.TOKEN_BUCKET_TIME_INTERVAL*Const.TOKEN_BUCKET_STEP_NUM;
+            if((nowTime-tokenLimit.getLastPutTime())> tokenBucketTimeInterval){
+                long maxValue=(nowTime-tokenLimit.getLastPutTime())/tokenBucketTimeInterval*tokenBucketStepNum;
                 if(maxValue>limit){
                     tokenLimit.setValue(limit);
                 }else{
@@ -43,7 +43,7 @@ public class DataBaseRateLimiterTokenBucketImpl extends AbstractDataBaseRateLimi
             tokenLimit=new TokenLimit(key,limit-1,nowTime);
         }
         baseMapper.insert(tokenLimit);
-        log.info("使用令牌桶算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,Const.TOKEN_BUCKET_TIME_INTERVAL,limit-tokenLimit.getValue(),limit);
+        log.info("使用令牌桶算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,tokenBucketTimeInterval,limit-tokenLimit.getValue(),limit);
     }
 
 

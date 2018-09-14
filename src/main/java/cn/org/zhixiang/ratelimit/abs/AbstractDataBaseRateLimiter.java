@@ -19,12 +19,12 @@ public abstract class AbstractDataBaseRateLimiter implements RateLimiter {
     public BaseMapper baseMapper;
 
     @Override
-    public  void counterConsume(String key, long limit) { }
+    public  void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) { }
 
 
 
     @Override
-    public void tokenConsume(String key, long limit) { }
+    public void tokenConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) { }
 
 
 }

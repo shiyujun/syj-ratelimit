@@ -19,13 +19,13 @@ public class MapRateLimiterCounterImpl extends AbstractMapRateLimiter {
 
 
     @Override
-    public void counterConsume(String key, long limit) {
+    public void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
 
         long nowTime=System.currentTimeMillis()/1000;
         if(map.containsKey(key)){
             long value=map.get(key);
             long lastClearTime=lastPutTimeMap.get(key);
-            if((nowTime-lastClearTime)> Const.REFRESH_INTERVAL){
+            if((nowTime-lastClearTime)> lrefreshInterval){
                 lastPutTimeMap.put(key,nowTime);
                 value=0;
             }
@@ -38,7 +38,7 @@ public class MapRateLimiterCounterImpl extends AbstractMapRateLimiter {
             map.put(key,1L);
             lastPutTimeMap.put(key,nowTime);
         }
-        log.info("使用计数器算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,Const.REFRESH_INTERVAL,map.get(key),limit);
+        log.info("使用计数器算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,lrefreshInterval,map.get(key),limit);
     }
 
 
