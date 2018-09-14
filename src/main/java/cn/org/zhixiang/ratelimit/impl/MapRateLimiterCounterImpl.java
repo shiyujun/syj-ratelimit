@@ -6,6 +6,8 @@ import cn.org.zhixiang.ratelimit.abs.AbstractMapRateLimiter;
 import cn.org.zhixiang.util.Const;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 /**
  * describe:
  *
@@ -22,23 +24,25 @@ public class MapRateLimiterCounterImpl extends AbstractMapRateLimiter {
     public void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
 
         long nowTime=System.currentTimeMillis()/1000;
-        if(map.containsKey(key)){
-            long value=map.get(key);
+        AtomicLong value=map.get(key);
+        if(value!=null){
+
             long lastClearTime=lastPutTimeMap.get(key);
             if((nowTime-lastClearTime)> lrefreshInterval){
                 lastPutTimeMap.put(key,nowTime);
-                value=0;
+                value.set(0);
             }
-            if(value<limit){
-                map.put(key,value+1);
+            if(value.get()<limit){
+                value.incrementAndGet();
+                map.put(key,value);
             }else{
                 throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
             }
         }else{
-            map.put(key,1L);
+            map.put(key,new AtomicLong(1));
             lastPutTimeMap.put(key,nowTime);
         }
-        log.info("使用计数器算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,lrefreshInterval,map.get(key),limit);
+        log.info("使用计数器算法拦截了key为{}的请求.当前key在{}秒内已进入{}次，此key最大允许进入{}次",key,lrefreshInterval,map.get(key).get(),limit);
     }
 
 

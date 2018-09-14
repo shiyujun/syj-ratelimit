@@ -4,6 +4,7 @@ import cn.org.zhixiang.ratelimit.RateLimiter;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * describe:
@@ -14,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class AbstractMapRateLimiter implements RateLimiter {
 
-    protected  static volatile Map<String,Long> map=new ConcurrentHashMap<String, Long>();
+    protected  static volatile Map<String,AtomicLong> map=new ConcurrentHashMap<String, AtomicLong>();
     protected  static volatile Map<String,Long> lastPutTimeMap=new ConcurrentHashMap<String, Long>();
 
     @Override

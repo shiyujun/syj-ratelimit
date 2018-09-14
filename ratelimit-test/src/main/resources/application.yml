@@ -1,7 +1,9 @@
 server:
     port: 8888
 
-
+syj-rateLimit:
+  algorithm: token
+  db: redis
 
 spring:
   datasource:
@@ -25,9 +27,9 @@ spring:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 200
   redis:
-    host: 10.0.20.
+    host: 10.0.20.120
     port: 7000
-    password:
+    password: unicode!@#
     pool:
       max-active: 8
       max-wait: 1
