@@ -10,11 +10,11 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/05
- * @描述
+ * @author  syj
+ * CreateTime    2018/09/05
+ * Description
  */
 @Service
 @DependsOn("rateLimiter")

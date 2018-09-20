@@ -7,11 +7,11 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/04
- * @描述 开启限流功能的标识注解
+ * @author  syj
+ * CreateTime    2018/09/04
+ * Description   开启限流功能的标识注解
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

@@ -25,81 +25,49 @@ import javax.sql.DataSource;
 
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/05
- * @描述
+ * @author  syj
+ * CreateTime    2018/09/05
+ * Description
  */
 @Slf4j
 @Configuration
 @ComponentScan(basePackages="cn.org.zhixiang")
 public class EnableSyjRateLimitConfiguration {
 
-    @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "redis")
-    public static class RedisConfiguration {
-        @Bean
-        @ConditionalOnMissingBean(name = "redisTemplate")
-        public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-            RedisTemplate<Object, Object> template = new RedisTemplate<>();
-            template.setConnectionFactory(connectionFactory);
-            template.setKeySerializer(new StringRedisSerializer());
-            template.afterPropertiesSet();
-            return template;
-        }
-        @Bean(name = "rateLimiter")
-        @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "token")
-        public RateLimiter tokenRateLimiter() {
-            DefaultRedisScript<Long> consumeRedisScript=new DefaultRedisScript();
-            consumeRedisScript.setResultType(Long.class);
-            consumeRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-tokenBucket.lua")));
-            return new RedisRateLimiterTokenBucketImpl(consumeRedisScript);
-        }
 
-        @Bean(name = "rateLimiter")
-        @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "counter", matchIfMissing = true)
-        public RateLimiter counterRateLimiter() {
-            DefaultRedisScript<Long> redisScript=new DefaultRedisScript();
-            redisScript.setResultType(Long.class);
-            redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-counter.lua")));
-            return new RedisRateLimiterCounterImpl(redisScript);
-        }
-
+    @Bean
+    @ConditionalOnMissingBean(name = "redisTemplate")
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<Object, Object> template = new RedisTemplate<Object, Object>();
+        template.setConnectionFactory(connectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.afterPropertiesSet();
+        return template;
     }
 
-    @MapperScan("cn.org.zhixiang.dao")
-    @ConditionalOnClass(DataSource.class)
-    @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "sql")
-    public static class SpringDataConfiguration {
+    @Bean(name = "rateLimiter")
+    @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "token")
+    public RateLimiter tokenRateLimiter() {
+        DefaultRedisScript<Long> consumeRedisScript=new DefaultRedisScript();
+        consumeRedisScript.setResultType(Long.class);
+        consumeRedisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-tokenBucket.lua")));
+        return new RedisRateLimiterTokenBucketImpl(consumeRedisScript);
+    }
 
-        @Bean(name = "rateLimiter")
-        @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "token")
-        public RateLimiter tokenRateLimiter() {
-            return new DataBaseRateLimiterTokenBucketImpl();
-        }
-
-        @Bean(name = "rateLimiter")
-        @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "counter", matchIfMissing = true)
-        public RateLimiter counterRateLimiter() {
-            return new DataBaseRateLimiterCounterImpl();
-        }
+    @Bean(name = "rateLimiter")
+    @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "counter", matchIfMissing = true)
+    public RateLimiter counterRateLimiter() {
+        DefaultRedisScript<Long> redisScript=new DefaultRedisScript();
+        redisScript.setResultType(Long.class);
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("script/redis-ratelimiter-counter.lua")));
+        return new RedisRateLimiterCounterImpl(redisScript);
     }
 
 
-    @ConditionalOnProperty(prefix = Const.PREFIX, name = "db", havingValue = "map", matchIfMissing = true)
-    public static class MapConfiguration {
-        @Bean(name = "rateLimiter")
-        @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "token")
-        public RateLimiter tokenRateLimiter() {
-            return new MapRateLimiterTokenBucketImpl();
-        }
 
-        @Bean(name = "rateLimiter")
-        @ConditionalOnProperty(prefix = Const.PREFIX, name = "algorithm", havingValue = "counter", matchIfMissing = true)
-        public RateLimiter counterRateLimiter() {
-            return new MapRateLimiterCounterImpl();
-        }
 
-    }
+
 
 }

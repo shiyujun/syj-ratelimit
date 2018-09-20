@@ -5,12 +5,14 @@ import cn.org.zhixiang.annotation.EnableSyjRateLimit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/13
- * @描述 加载syj-rateLimit SpringBoot或者SpringCloud环境下可以使用
+ * @author  syj
+ * CreateTime    2018/09/13
+ * Description   加载syj-rateLimit SpringBoot或者SpringCloud环境下可以使用
  */
+
+
 @EnableSyjRateLimit
 @SpringBootApplication
 public class Application {

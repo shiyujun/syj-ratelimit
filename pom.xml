@@ -7,19 +7,14 @@
     <groupId>cn.org.zhixiang</groupId>
     <artifactId>syj-ratelimit</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1-SNAPSHOT</version>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <version>0.0.1</version>
+    <name>syj-ratelimit</name>
+    <description>a project about ratelimit</description>
+    <url>http://zhixiang.org.cn</url>
+
+    <properties>
+               <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -68,4 +63,53 @@
 
 
 
+
+
+    <licenses>
+        <license>
+            <name>The ApacheSoftware License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <tag>master</tag>
+        <url>https://github.com/2388386839/syj-ratelimit.git</url>
+        <connection>scm:git:https://github.com/2388386839/syj-ratelimit.git</connection>
+        <developerConnection>scm:git:https://github.com/2388386839/syj-ratelimit.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <name>ShiYuJun</name>
+            <email>zxservice@zhixiang.org.cn</email>
+            <organization>xxx</organization>
+        </developer>
+    </developers>
+
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+<!--<servers>
+    <server>
+      <id>sonatype-nexus-snapshots</id>
+      <username>Sonatype 账号</username>
+      <password>Sonatype 密码</password>
+    </server>
+    <server>
+      <id>sonatype-nexus-staging</id>
+      <username>Sonatype 账号</username>
+      <password>Sonatype 密码</password>
+    </server>
+  </servers>
+  gpg - -gen-key
+  mvn clean deploy -P sonatype-oss-release -Darguments="gpg.passphrase=密钥密码"
+  https://oss.sonatype.org/#stagingRepositories
+  gpg - -list-keys
+  gpg - -keyserver hkp://keyserver.ubuntu.com:11371 - -send-keys pub
+  Close->Confirm
+  Release->Confirm
+  -->
 </project>

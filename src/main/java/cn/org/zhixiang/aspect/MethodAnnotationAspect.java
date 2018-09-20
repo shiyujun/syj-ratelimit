@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/05
- * @描述 MethodRateLimit注解切面类
+ * @author  syj
+ * CreateTime    2018/09/05
+ * Description   MethodRateLimit注解切面类
  */
 @Slf4j
 @Aspect
@@ -29,7 +29,7 @@ public class MethodAnnotationAspect {
 
     /**
      * 方法拦截注解切点
-     * @param methodRateLimit
+     * @param methodRateLimit 注解
      */
     @Pointcut("@annotation(methodRateLimit)")
     public void annotationPointcut(MethodRateLimit methodRateLimit) {
@@ -38,8 +38,8 @@ public class MethodAnnotationAspect {
 
     /**
      * 被@MethodRateLimit注解标识的方法被调用
-     * @param joinPoint
-     * @param methodRateLimit
+     * @param joinPoint 切点
+     * @param methodRateLimit 注解
      */
     @Before("annotationPointcut(methodRateLimit)")
     public void doBefore(JoinPoint joinPoint, MethodRateLimit methodRateLimit) {

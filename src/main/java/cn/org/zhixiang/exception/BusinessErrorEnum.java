@@ -1,11 +1,11 @@
 package cn.org.zhixiang.exception;
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/07
- * @描述  通用错误信息
+ * @author  syj
+ * CreateTime    2018/09/07
+ * Description    通用错误信息
  */
 public enum BusinessErrorEnum {
 

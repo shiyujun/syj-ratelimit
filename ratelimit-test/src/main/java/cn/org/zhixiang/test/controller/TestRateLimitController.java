@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/10
- * @描述 展示注解各个功能的例子
+ * @author  syj
+ * CreateTime    2018/09/10
+ * Description   展示注解各个功能的例子
  */
 @RestController
 @RequestMapping("/testAnnotation")

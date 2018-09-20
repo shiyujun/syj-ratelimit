@@ -13,18 +13,18 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/05
- * @描述 RateLimiter工具类
+ * @author  syj
+ * CreateTime    2018/09/05
+ * Description   RateLimiter工具类
  */
 public class RateLimiterUtil {
     /**
      * 获取唯一标识此次请求的key
-     * @param joinPoint
-     * @param checkTypeEnum
-     * @return
+     * @param joinPoint 切点
+     * @param checkTypeEnum 枚举
+     * @return key
      */
     public static String getRateKey(JoinPoint joinPoint, CheckTypeEnum checkTypeEnum){
         StringBuffer key=new StringBuffer();
@@ -66,8 +66,8 @@ public class RateLimiterUtil {
     /**
      * 获取当前网络ip
      *
-     * @param request
-     * @return
+     * @param request HttpServletRequest
+     * @return ip
      */
     public static String getIpAddr(HttpServletRequest request) {
         String ipAddress = request.getHeader("x-forwarded-for");

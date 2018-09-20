@@ -1,11 +1,11 @@
 package cn.org.zhixiang.annotation;
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/10
- * @描述
+ * @author  syj
+ * CreateTime    2018/09/10
+ * Description
  */
 public enum CheckTypeEnum {
         /**

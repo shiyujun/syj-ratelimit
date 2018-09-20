@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/05
- * @描述 MethodRateLimit注解切面类
+ * @author  syj
+ * CreateTime    2018/09/05
+ * Description   MethodRateLimit注解切面类
  */
 @Slf4j
 @Aspect
@@ -27,14 +27,20 @@ public class ClassAnnotationAspect {
     private RateLimiterAlgorithm rateLimiterAlgorithm;
 
 
-
-
+    /**
+     *
+     * @param classRateLimit 注解
+     */
     @Pointcut("@within(classRateLimit)")
     public void annotationPointcut(ClassRateLimit classRateLimit) {
     }
 
 
-
+    /**
+     *
+     * @param joinPoint 切点
+     * @param classRateLimit 注解
+     */
     @Before("@within(classRateLimit)")
     public void doBefore(JoinPoint joinPoint, ClassRateLimit classRateLimit) {
         String key= RateLimiterUtil.getRateKey(joinPoint,classRateLimit.checkType());

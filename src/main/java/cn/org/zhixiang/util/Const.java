@@ -1,11 +1,11 @@
 package cn.org.zhixiang.util;
 
 /**
- * describe:
+ * Description :
  *
- * @创建人 syj
- * @创建时间 2018/09/05
- * @描述 全局静态常量类
+ * @author  syj
+ * CreateTime    2018/09/05
+ * Description   全局静态常量类
  */
 public class Const {
     /**
