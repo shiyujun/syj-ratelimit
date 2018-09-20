@@ -57,7 +57,7 @@ public class RateLimiterUtil {
             if(request.getAttribute(Const.CUSTOM)!=null){
                 key.append(request.getAttribute(Const.CUSTOM).toString());
             }else{
-                throw new BusinessException(BusinessErrorEnum.USER_NOT_DOUND);
+                throw new BusinessException(BusinessErrorEnum.CUSTOM_NOT_DOUND);
             }
         }
         return key.toString();

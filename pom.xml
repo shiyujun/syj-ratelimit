@@ -57,13 +57,7 @@
             <version>1.7.11.RELEASE</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
-
-
-
-
-
 
     <licenses>
         <license>

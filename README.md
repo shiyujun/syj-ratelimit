@@ -4,10 +4,10 @@
 ## 项目介绍
 >此项目为一个无侵入的网关限流插件,如果您正在寻找一个网关限流的插件，使用syj-ratelimit是最明智的选择<br>
 ### 为什么选择syj-ratelimit
-1. 无任何代码侵入，最多需要2行配置<br>
+1. 无任何代码侵入，最多需要1行配置来选择实现的算法<br>
 2.  细粒度控制，你可以控制同一个类中的A方法每分钟限流100而B方法每分钟限流200<br>
-3.  高灵活性，可根据自定义信息（如用户id、用户ip、用户权限等）进行限流、可灵活选择限流算法、可灵活选择存储介质<br>
-4.  高可用性，支持数据库或redis+lua为分布式系统保驾护航<br>
+3.  高灵活性，可根据自定义信息（如用户id、用户ip、用户权限等）进行限流、可灵活选择限流算法<br>
+4.  高可用性，使用redis+lua脚本的原子性为分布式系统保驾护航<br>
 5.  高可扩展性，限流算法和存储介质可自由添加且不改变原有代码
 ## Quick Start
 ### 1.  引入syj-ratelimit
@@ -20,7 +20,7 @@
  ```
 ### 2.  注册syj-ratelimit
 >因为并不是所有的项目都会使用SpringBoot,所以在注册这一步我们分为两种情况
-#### 1.SpringBoot
+#### 1.SpringBoot或SpringCloud项目
 您需要在启动类上增加一个注解
 ```java
 @EnableSyjRateLimit
@@ -33,7 +33,56 @@
 public class SyjRateLimitConfig {
 }
 ```
-### 3.  使用syj-ratelimit
+### 3. 配置你的redis连接
+>您需要配置您的redis连接为syj-ratelimit，同2的情况我们把项目分为两种情况（注意下方的配置需要根据实际情况调整）
+#### 1.SpringBoot或SpringCloud项目
+##### 1.单机版redis
+```yaml
+spring:
+  redis:
+    host: 
+    port: 
+    password:
+    pool:
+      max-active: 8
+      max-wait: 1
+      max-idle: 8
+      min-idle: 0
+    timeout: 2000
+```
+##### 2. redis集群
+```yaml
+spring:
+  redis:
+    cluster:
+      nodes: 10.1.2.111:6379,10.1.2.112:6379,10.1.2.113:6379
+    password:
+    pool:
+      max-active: 8
+      max-wait: 1
+      max-idle: 8
+      min-idle: 0
+    timeout: 2000
+```
+#### 2. Spring应用
+您只需要注册一个RedisConnectionFactory子类的bean。比如说
+```xml
+<beans>
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig" >
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <property name="maxWaitMillis" value="${redis.maxWait}" />
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+    </bean>
+    <bean id="connectionFactory"  class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" >
+        <property name="poolConfig" ref="poolConfig" />
+        <property name="port" value="${redis.port}" />
+        <property name="hostName" value="${redis.host}" />
+        <property name="timeout" value="${redis.timeout}" ></property>
+        <property name="database" value="1"></property>
+    </bean>
+</beans>
+```
+### 4.  使用syj-ratelimit
 >其实看到这一步的时候您已经可以使用syj-ratelimit来进行限流了哦。<br>
 
 ##### syj-ratelimit为您提供了两个注解来进行限流，它们是@ClassRateLimit和@MethodRateLimit。顾名思义，它们一个是用在类上的一个是用在方法上的。他们的功能是一样的，之所以分出来两个注解的原因就是为了解决当一个类的不同接口需要进行不同的限流方案问题
@@ -153,11 +202,10 @@ public class TestRateLimitController {
     }
 }
 ```
-注：Quick Start只针对单机版系统或者本地测试使用，如果您的系统是分布式系统请参考下方的分布式部署指南<br>
 
-## 分布式部署指南
+## 更多信息
 
->相信看完了上方的Quick Start你已经迫不及待的想要将syj-ratelimit应用于生产了。我在这里为您提供了两种限流算法以及两种存储介质
+>相信看完了上方的Quick Start你已经迫不及待的想要将syj-ratelimit应用于生产了。我在这里为您提供了两种限流算法
 
 #### 限流算法
 > 如果您对限流算法不太了解的话可以先参考一下这篇文章[http://zhixiang.org.cn](http://zhixiang.org.cn)
@@ -186,58 +234,22 @@ public class TestRateLimitController {
          */
         public long tokenBucketStepNum() default 5;
     ```
-#### 存储介质
->当我们使用了分布式系统时本地的任何存储介质都无法保证我们的高可用性，故这里提供了数据库方式以及Redis方式<br>
+#### 再次开发
+> 如果您觉得您有相比这两种算法更加强大的算法，您可以[在这](https://github.com/2388386839/syj-ratelimit)fork项目进行开发
 
-##### 增加配置
-当你要指定存储介质时你只需要增加这样的一行配置
- 1. yml
- ```yaml
-    syj-rateLimit:
-        db: sql             #可选值sql,redis
-```      
-2. properties
-```properties
-    syj-rateLimit.db= sql   #可选值sql,redis
-```        
-##### 使用数据库
-当你选择使用数据库存储时，我并不关心你使用的是MySQL还是Oracle，你只需要在数据库插入一张表即可
-```sql
-CREATE TABLE `syj_rate_limit` (
-  `key` varchar(400) NOT NULL,
-  `value` bigint(20) DEFAULT NULL,
-  `lastPutTime` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-```
-还需要别的操作么？ 不需要，只要你的系统能够跑sql我的就可以。<br>
-比如说，你有以下配置:
-```yaml
-spring:
-  datasource:
-    url: jdbc:mysql://**:3306/syj-ratelimit?characterEncoding=utf-8&useSSL=false
-    username: root
-    password: root
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    
-```
+为了遵守代码的开闭原则，您在添加新的限流算法时请参考包ratelimit、config和algorithm 
 
+#### 作者信息
+1. [GitHub](https://github.com/2388386839)
+2. [码云](https://gitee.com/zhixiang_blog)
+3. [个人网站](http://zhixiang.org.cn)
+#### 项目实现设计的技术
+1.  [如何使用Redis执行Lua脚本](http://zhixiang.org.cn)
+2.  [我是如何把自定义注解应用到生产的](http://zhixiang.org.cn)
+3.  [大型网站限流算法的实现和改造](http://zhixiang.org.cn)
+4.  [IDEA中使用lombok插件](http://zhixiang.org.cn/2018/08/16/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8lombok%E6%8F%92%E4%BB%B6/)，
+[lombok高级功能之@Conditional注解](http://zhixiang.org.cn)
+5.  [策略模式](http://zhixiang.org.cn/2018/07/26/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/)
+6.  [如何将自己的jar包发布到mavan中央仓库](http://zhixiang.org.cn)
 
-##### 使用Redis
-当你选择使用Redis存储时，可能你会别使用数据库更加省心，只需要保证你配置了Redis的相关属性就行。<br>
-比如说，你有以下配置:
-```yaml
-spring:
-  redis:
-    host: 10.0.*.*
-    port: 6379
-    password: ****
-    pool:
-      max-active: 8
-      max-wait: 1
-      max-idle: 8
-      min-idle: 0
-    timeout: 1000
-```
 
