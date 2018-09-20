@@ -225,16 +225,17 @@ public class TestRateLimitController {
 为了遵守代码的开闭原则，您在添加新的限流算法时请参考包ratelimit、config和algorithm 
 
 #### 作者信息
-1. [GitHub](https://github.com/2388386839)
-2. [码云](https://gitee.com/zhixiang_blog)
-3. [个人网站](http://zhixiang.org.cn)
+1. [个人网站](http://zhixiang.org.cn)
+2. [GitHub](https://github.com/2388386839)
+3. [码云](https://gitee.com/zhixiang_blog)
+
 #### 项目实现设计的技术
 1.  [如何使用Redis执行Lua脚本](http://zhixiang.org.cn)
-2.  [我是如何把自定义注解应用到生产的](http://zhixiang.org.cn)
+2.  [我是如何把自定义注解应用到生产的](http://zhixiang.org.cn/2018/09/20/是如何把自定义注解应用到生产的/)
 3.  [大型网站限流算法的实现和改造](http://zhixiang.org.cn)
 4.  [IDEA中使用lombok插件](http://zhixiang.org.cn/2018/08/16/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8lombok%E6%8F%92%E4%BB%B6/)，
-[lombok高级功能之@Conditional注解](http://zhixiang.org.cn)
+[SpringBoot条件注解@Conditional](http://zhixiang.org.cn/2018/09/20/SpringBoot条件注解@Conditional/)
 5.  [策略模式](http://zhixiang.org.cn/2018/07/26/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/)
-6.  [如何将自己的jar包发布到mavan中央仓库](http://zhixiang.org.cn)
+6.  [如何将自己的jar包发布到mavan中央仓库](http://zhixiang.org.cn2018/09/20/如何将自己的jar包发布到mavan中央仓库/)
 
 

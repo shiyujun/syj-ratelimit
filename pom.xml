@@ -74,31 +74,10 @@
             <organization>xxx</organization>
         </developer>
     </developers>
-
-
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
-<!--<servers>
-    <server>
-      <id>sonatype-nexus-snapshots</id>
-      <username>Sonatype 账号</username>
-      <password>Sonatype 密码</password>
-    </server>
-    <server>
-      <id>sonatype-nexus-staging</id>
-      <username>Sonatype 账号</username>
-      <password>Sonatype 密码</password>
-    </server>
-  </servers>
-  gpg - -gen-key
-  mvn clean deploy -P sonatype-oss-release -Darguments="gpg.passphrase=密钥密码"
-  https://oss.sonatype.org/#stagingRepositories
-  gpg - -list-keys
-  gpg - -keyserver hkp://keyserver.ubuntu.com:11371 - -send-keys pub
-  Close->Confirm
-  Release->Confirm
-  -->
+
 </project>
