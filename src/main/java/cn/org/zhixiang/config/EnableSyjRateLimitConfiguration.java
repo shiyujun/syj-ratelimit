@@ -2,12 +2,10 @@ package cn.org.zhixiang.config;
 
 
 import cn.org.zhixiang.ratelimit.RateLimiter;
-import cn.org.zhixiang.ratelimit.impl.*;
+import cn.org.zhixiang.ratelimit.impl.RedisRateLimiterCounterImpl;
+import cn.org.zhixiang.ratelimit.impl.RedisRateLimiterTokenBucketImpl;
 import cn.org.zhixiang.util.Const;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.ognl.PropertyAccessor;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -17,11 +15,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.scripting.support.ResourceScriptSource;
-
-import javax.sql.DataSource;
 
 
 /**

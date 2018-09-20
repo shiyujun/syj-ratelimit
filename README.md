@@ -36,26 +36,11 @@ public class SyjRateLimitConfig {
 ### 3. 配置你的redis连接
 >您需要配置您的redis连接为syj-ratelimit，同2的情况我们把项目分为两种情况（注意下方的配置需要根据实际情况调整）
 #### 1.SpringBoot或SpringCloud项目
-##### 1.单机版redis
 ```yaml
 spring:
   redis:
     host: 
     port: 
-    password:
-    pool:
-      max-active: 8
-      max-wait: 1
-      max-idle: 8
-      min-idle: 0
-    timeout: 2000
-```
-##### 2. redis集群
-```yaml
-spring:
-  redis:
-    cluster:
-      nodes: 10.1.2.111:6379,10.1.2.112:6379,10.1.2.113:6379
     password:
     pool:
       max-active: 8

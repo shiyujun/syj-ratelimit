@@ -33,7 +33,6 @@ public class RedisRateLimiterCounterImpl extends RateLimiter {
 
     @Override
     public void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
-        log.info("使用计数器算法拦截了key为{}的请求.拦截信息存储在Redis中",key);
         List<Object> keyList = new ArrayList();
         keyList.add(key);
         keyList.add(limit+"");

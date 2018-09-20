@@ -13,18 +13,19 @@ if hasKey == 1 then
     local diff = tonumber(nowTime)-tonumber(lastClearTime);
     local value = tonumber(redis.call('GET',key));
     if  diff > interval then
-            local maxValue = value+diff/interval*step
+            local maxValue = value+diff/interval*step;
             if maxValue > limit then
                 value = limit;
             else
                 value = maxValue;
             end
             redis.call('SET',lastClearTimeKey,nowTime);
+            redis.call('SET',key,value);
     end
     if value <= 0 then
         return -1;
     else
-        redis.call('SET',key,value - 1);
+        redis.call('DECR',key);
     end
 else
     redis.call('SET',key,limit-1);
