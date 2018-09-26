@@ -2,20 +2,20 @@
 ***
 
 ## 项目介绍
->此项目为一个无侵入的网关限流插件,如果您正在寻找一个网关限流的插件，使用syj-ratelimit是最明智的选择<br>
+>此项目为一个无侵入的应用级网关限流框架,如果您正在寻找一个网关限流的框架，使用syj-ratelimit是最明智的选择<br>
 ### 为什么选择syj-ratelimit
-1. 无任何代码侵入，最多需要1行配置来选择实现的算法<br>
-2.  细粒度控制，你可以控制同一个类中的A方法每分钟限流100而B方法每分钟限流200<br>
+1. 无需任何复杂配置文件，一个注解玩转syj-ratelimit<br>
+2.  细粒度控制，您可以控制同一个类中的A方法每分钟限流100而B方法每分钟限流200<br>
 3.  高灵活性，可根据自定义信息（如用户id、用户ip、用户权限等）进行限流、可灵活选择限流算法<br>
 4.  高可用性，使用redis+lua脚本的原子性为分布式系统保驾护航<br>
-5.  高可扩展性，限流算法和存储介质可自由添加且不改变原有代码
+5.  高可扩展性，可灵活添加限流算法<br>
 ## Quick Start
 ### 1.  引入syj-ratelimit
 ```xml
 <dependency>
     <groupId>cn.org.zhixiang</groupId>
     <artifactId>syj-ratelimit</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
  </dependency>
  ```
 ### 2.  注册syj-ratelimit
@@ -33,7 +33,7 @@
 public class SyjRateLimitConfig {
 }
 ```
-### 3. 配置你的redis连接
+### 3. 配置您的redis连接
 >您需要配置您的redis连接为syj-ratelimit，同2的情况我们把项目分为两种情况（注意下方的配置需要根据实际情况调整）
 #### 1.SpringBoot或SpringCloud项目
 ```yaml
@@ -92,7 +92,7 @@ public @interface ClassRateLimit {
 }
 ```
 来几个使用的例子吧<br>
-1. 一个对外提供的接口类所有方法都要限流。（例如，需要每个方法每30秒只允许调用10次）<br>
+1. 限流总资源数。（例如，需要每个方法每30秒只允许调用10次）<br>
 ```java
 @ClassRateLimit(limit = 10,refreshInterval=30)
 @RestController
@@ -111,11 +111,11 @@ public class TestClassRateLimitController {
 
 }
 ```
-2.  我感觉1太不公平了，可能2个人访问havaParam，1个人先访问9次第二个人只能访问一次
+2.  根据IP限流总资源数
 ```java
 @ClassRateLimit(limit = 10,refreshInterval=30,checkType = CheckTypeEnum.IP)//每个IP每30秒可以访问10次
 ```
-3. 我感觉2也不大好，有人伪造IP怎么办（自定义时推荐在controller中查出能标识用户唯一性的值放入request中，然后再service中进行限流）
+3. 根据自定义信息限流总资源数（自定义时推荐在controller中查出能标识用户唯一性的值放入request中，然后把限流注解添加到service中进行限流）
 ```java
 @RestController
 @RequestMapping("/testAnnotation")
@@ -139,7 +139,7 @@ public class TestService {
     }
 }
 ```
-4.  我感觉前3个都不好，同一个类中我就只想拦截一个方法
+4.  限流某个方法的并发数
 ```java
 @RestController
 @RequestMapping("/testAnnotation")
@@ -163,34 +163,11 @@ public class TestRateLimitController {
 
 }
 ```
-5. 既然使用了@MethodRateLimit，那么如何证明它的灵活性呢
-```java
-@RestController
-@RequestMapping("/testAnnotation")
-public class TestRateLimitController {
 
-    @PostMapping("/defult")
-    public void defult(){
-        System.out.println("没有拦截");
-    }
-
-    @PostMapping("/ip")
-    @MethodRateLimit(limit = 30,refreshInterval=120,checkType = CheckTypeEnum.IP)
-    public void ip(){
-        System.out.println("根据用户IP拦截，单个IP2分钟可以进入次方法30次");
-    }
-
-    @MethodRateLimit(limit = 300,refreshInterval=10,checkType = CheckTypeEnum.USER)
-    @PostMapping("/user")
-    public void user(){
-        System.out.println("单个用户10秒中可以进入300次");
-    }
-}
-```
 
 ## 更多信息
 
->相信看完了上方的Quick Start你已经迫不及待的想要将syj-ratelimit应用于生产了。我在这里为您提供了两种限流算法
+>相信看完了上方的Quick Start您已经迫不及待的想要将syj-ratelimit应用于生产了。我在这里为您提供了两种限流算法。您可以根据自己系统的需求选择自己需要的算法
 
 #### 限流算法
 > 如果您对限流算法不太了解的话可以先参考一下这篇文章[http://zhixiang.org.cn](http://zhixiang.org.cn)
@@ -220,7 +197,7 @@ public class TestRateLimitController {
         public long tokenBucketStepNum() default 5;
     ```
 #### 再次开发
-> 如果您觉得您有相比这两种算法更加强大的算法，您可以[在这](https://github.com/2388386839/syj-ratelimit)fork项目进行开发
+> 如果您想使用别的算法，您可以[在这](https://github.com/2388386839/syj-ratelimit)fork项目进行开发
 
 为了遵守代码的开闭原则，您在添加新的限流算法时请参考包ratelimit、config和algorithm 
 
