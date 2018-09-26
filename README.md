@@ -213,6 +213,6 @@ public class TestRateLimitController {
 4.  [IDEA中使用lombok插件](http://zhixiang.org.cn/2018/08/16/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8lombok%E6%8F%92%E4%BB%B6/)
 5.  [SpringBoot条件注解@Conditional](http://zhixiang.org.cn/2018/09/20/SpringBoot条件注解@Conditional/)
 6.  [策略模式](http://zhixiang.org.cn/2018/07/26/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/)
-7.  [如何将自己的jar包发布到mavan中央仓库](http://zhixiang.org.cn2018/09/20/如何将自己的jar包发布到mavan中央仓库/)
+7.  [如何将自己的jar包发布到mavan中央仓库](http://zhixiang.org.cn/2018/09/20/如何将自己的jar包发布到mavan中央仓库/)
 
 
