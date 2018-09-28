@@ -209,7 +209,7 @@ public class TestRateLimitController {
 #### 项目实现设计的技术
 1.  [如何使用Redis执行Lua脚本](http://zhixiang.org.cn/2018/09/21/何使用Redis执行Lua脚本/)
 2.  [我是如何把自定义注解应用到生产的](http://zhixiang.org.cn/2018/09/20/是如何把自定义注解应用到生产的/)
-3.  [大型网站限流算法的实现和改造](http://zhixiang.org.cn/2018/09/21/型网站限流算法的实现和改造/)
+3.  [大型网站限流算法的实现和改造](http://zhixiang.org.cn/2018/09/28/%E5%9E%8B%E7%BD%91%E7%AB%99%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E6%94%B9%E9%80%A0/)
 4.  [IDEA中使用lombok插件](http://zhixiang.org.cn/2018/08/16/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8lombok%E6%8F%92%E4%BB%B6/)
 5.  [SpringBoot条件注解@Conditional](http://zhixiang.org.cn/2018/09/20/SpringBoot条件注解@Conditional/)
 6.  [策略模式](http://zhixiang.org.cn/2018/07/26/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/)
