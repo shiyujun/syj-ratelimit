@@ -35,8 +35,8 @@ public class RedisRateLimiterCounterImpl extends RateLimiter {
     public void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
         List<Object> keyList = new ArrayList();
         keyList.add(key);
-        keyList.add(limit+"");
-        keyList.add(lrefreshInterval+"");
+        keyList.add(limit+Const.HASH_TAG);
+        keyList.add(lrefreshInterval+Const.HASH_TAG);
         String result=redisTemplate.execute(redisScript,keyList,keyList).toString();
         if(Const.REDIS_ERROR.equals(result)){
             throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);

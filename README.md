@@ -15,7 +15,7 @@
 <dependency>
     <groupId>cn.org.zhixiang</groupId>
     <artifactId>syj-ratelimit</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
  </dependency>
  ```
 ### 2.  注册syj-ratelimit
@@ -39,6 +39,9 @@ public class SyjRateLimitConfig {
 ```yaml
 spring:
   redis:
+  
+    #cluster: 集群模式启用
+     # nodes: 10.0.20.135:7010,10.0.20.135:7011,10.0.20.135:7012
     host: 
     port: 
     password:
@@ -188,11 +191,11 @@ public class TestRateLimitController {
     2.  您需要将目光放到@ClassRateLimit上的另外两个属性上
     ```java
         /**
-         * 向令牌桶中添加数据的时间间隔,以秒为单位。默认值1秒
+         * 向令牌桶中添加数据的时间间隔,以秒为单位。默认值10秒
          */
         public long tokenBucketTimeInterval() default 10;
         /**
-         * 每次为令牌桶中添加的令牌数量。默认值100个
+         * 每次为令牌桶中添加的令牌数量。默认值5个
          */
         public long tokenBucketStepNum() default 5;
     ```
@@ -216,3 +219,10 @@ public class TestRateLimitController {
 7.  [如何将自己的jar包发布到mavan中央仓库](http://zhixiang.org.cn/2018/09/20/如何将自己的jar包发布到mavan中央仓库/)
 
 
+#### 版本信息
+
+#####  1.0.0
+>syj-ratelimit上线
+#####  1.1.0
+>1. 修复计算令牌数取整问题
+>2. 修复redis集群部署slot不一致问题

@@ -1,7 +1,7 @@
 
 local key = KEYS[1];
-local limit = tonumber(KEYS[2]);
-local expire = tonumber(KEYS[3]);
+local limit = tonumber(string.sub(KEYS[2],1,string.len(KEYS[2])-5));
+local expire = tonumber(string.sub(KEYS[3],1,string.len(KEYS[3])-5));
 
 local hasKey = redis.call('EXISTS',key);
 

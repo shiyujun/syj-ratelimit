@@ -12,6 +12,10 @@ public class Const {
      * 配置rateLimit的前缀
      */
     public static final String PREFIX="syj-rateLimit";
+    /**
+     * 集群模式指定slot的hash tag
+     */
+    public static final String HASH_TAG="{syj}";
 
     /**
      * 自定义拦截方式时的key

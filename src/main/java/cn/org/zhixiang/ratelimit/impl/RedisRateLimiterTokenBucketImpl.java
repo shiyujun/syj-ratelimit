@@ -39,10 +39,10 @@ public class RedisRateLimiterTokenBucketImpl extends RateLimiter {
 
         List<Object> keyList = new ArrayList();
         keyList.add(key);
-        keyList.add(limit+"");
-        keyList.add(tokenBucketStepNum+"");
-        keyList.add(tokenBucketTimeInterval+"");
-        keyList.add(System.currentTimeMillis()/1000+"");
+        keyList.add(limit+Const.HASH_TAG);
+        keyList.add(tokenBucketStepNum+Const.HASH_TAG);
+        keyList.add(tokenBucketTimeInterval+Const.HASH_TAG);
+        keyList.add(System.currentTimeMillis()/1000+Const.HASH_TAG);
         String result=redisTemplate.execute(redisScript,keyList,keyList).toString();
         if(Const.REDIS_ERROR.equals(result)){
             throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);

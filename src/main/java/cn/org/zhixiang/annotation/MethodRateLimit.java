@@ -33,12 +33,12 @@ public @interface MethodRateLimit {
     /**--------------------限流算法为令牌桶时的有效配置-----------------------**/
     /**
      *
-     * @return 向令牌桶中添加数据的时间间隔,以秒为单位。默认值1秒
+     * @return 向令牌桶中添加数据的时间间隔,以秒为单位。默认值10秒
      */
     public long tokenBucketTimeInterval() default 10;
     /**
      *
-     * @return 每次为令牌桶中添加的令牌数量。默认值100个
+     * @return 每次为令牌桶中添加的令牌数量。默认值5个
      */
     public long tokenBucketStepNum() default 5;
 
