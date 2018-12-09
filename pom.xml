@@ -63,9 +63,9 @@
     </licenses>
     <scm>
         <tag>master</tag>
-        <url>https://github.com/2388386839/syj-ratelimit.git</url>
-        <connection>scm:git:https://github.com/2388386839/syj-ratelimit.git</connection>
-        <developerConnection>scm:git:https://github.com/2388386839/syj-ratelimit.git</developerConnection>
+        <url>https://github.com/shiyujun/syj-ratelimit.git</url>
+        <connection>scm:git:https://github.com/shiyujun/syj-ratelimit.git</connection>
+        <developerConnection>scm:git:https://github.com/shiyujun/syj-ratelimit.git</developerConnection>
     </scm>
     <developers>
         <developer>

@@ -200,13 +200,13 @@ public class TestRateLimitController {
         public long tokenBucketStepNum() default 5;
     ```
 #### 再次开发
-> 如果您想使用别的算法，您可以[在这](https://github.com/2388386839/syj-ratelimit)fork项目进行开发
+> 如果您想使用别的算法，您可以[在这](https://github.com/shiyujun/syj-ratelimit)fork项目进行开发
 
 为了遵守代码的开闭原则，您在添加新的限流算法时请参考包ratelimit、config和algorithm 
 
 #### 作者信息
 1. [个人网站](http://zhixiang.org.cn)
-2. [GitHub](https://github.com/2388386839)
+2. [GitHub](https://github.com/shiyujun)
 3. [码云](https://gitee.com/zhixiang_blog)
 
 #### 项目实现设计的技术
