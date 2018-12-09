@@ -226,3 +226,5 @@ public class TestRateLimitController {
 #####  1.1.0
 >1. 修复计算令牌数取整问题
 >2. 修复redis集群部署slot不一致问题
+#####  1.1.1
+>1. 修复令牌桶算法脚本的bug

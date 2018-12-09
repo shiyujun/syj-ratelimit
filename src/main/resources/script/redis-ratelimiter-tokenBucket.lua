@@ -12,7 +12,7 @@ local hasKey = redis.call('EXISTS',key);
 if hasKey == 1 then
     local diff = tonumber(nowTime)-tonumber(lastClearTime);
     local value = tonumber(redis.call('GET',key));
-    if  diff > interval then
+    if  diff >= interval then
             local maxValue = value+math.floor(diff/interval)*step;
             if maxValue > limit then
                 value = limit;
