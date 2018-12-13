@@ -15,7 +15,7 @@
 <dependency>
     <groupId>cn.org.zhixiang</groupId>
     <artifactId>syj-ratelimit</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
  </dependency>
  ```
 ### 2.  注册syj-ratelimit
@@ -207,7 +207,6 @@ public class TestRateLimitController {
 #### 作者信息
 1. [个人网站](http://zhixiang.org.cn)
 2. [GitHub](https://github.com/shiyujun)
-3. [码云](https://gitee.com/zhixiang_blog)
 
 #### 项目实现设计的技术
 1.  [如何使用Redis执行Lua脚本](http://zhixiang.org.cn/2018/09/21/何使用Redis执行Lua脚本/)
