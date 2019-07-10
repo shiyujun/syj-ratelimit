@@ -227,3 +227,12 @@ public class TestRateLimitController {
 >2. 修复redis集群部署slot不一致问题
 #####  1.1.1
 >1. 修复令牌桶算法脚本的bug
+
+
+
+<h4 style="color:red">
+扫码关注公众号即可领取2000GJava学习资源 </h4>
+
+
+
+![1](https://shiyujun.cn/img/gongzhonghao.jpg)
