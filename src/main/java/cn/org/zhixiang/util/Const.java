@@ -16,6 +16,14 @@ public class Const {
      * 集群模式指定slot的hash tag
      */
     public static final String HASH_TAG="{syj}";
+    /**
+     * hash tag 前缀
+     */
+    public static final String HASH_TAG_PRFIX="{";
+    /**
+     * hash tag 后缀
+     */
+    public static final String HASH_TAG_SUFFIX="}";
 
     /**
      * 自定义拦截方式时的key

@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Description :
  *
- * @author  syj
+ * @author syj
  * CreateTime    2018/09/05
  * Description
  */
@@ -27,19 +27,30 @@ public class RedisRateLimiterCounterImpl extends RateLimiter {
 
     private DefaultRedisScript<Long> redisScript;
 
-    public RedisRateLimiterCounterImpl(DefaultRedisScript<Long> redisScript){
-        this.redisScript=redisScript;
+    public RedisRateLimiterCounterImpl(DefaultRedisScript<Long> redisScript) {
+        this.redisScript = redisScript;
     }
 
     @Override
     public void counterConsume(String key, long limit, long lrefreshInterval, long tokenBucketStepNum, long tokenBucketTimeInterval) {
         List<Object> keyList = new ArrayList();
         keyList.add(key);
-        keyList.add(limit+Const.HASH_TAG);
-        keyList.add(lrefreshInterval+Const.HASH_TAG);
-        String result=redisTemplate.execute(redisScript,keyList,keyList).toString();
-        if(Const.REDIS_ERROR.equals(result)){
+        String hashTag=getHashTag(key);
+        keyList.add(limit + hashTag);
+        keyList.add(lrefreshInterval + hashTag);
+        String result = redisTemplate.execute(redisScript, keyList, keyList).toString();
+        if (Const.REDIS_ERROR.equals(result)) {
             throw new BusinessException(BusinessErrorEnum.TOO_MANY_REQUESTS);
         }
     }
+
+    private static String getHashTag(String key) {
+        if (key.indexOf(Const.HASH_TAG_SUFFIX) > key.indexOf(Const.HASH_TAG_PRFIX)+ 1) {
+            return key;
+        }
+        key = key.replaceAll(Const.HASH_TAG_PRFIX, "");
+        key = key.replaceAll(Const.HASH_TAG_SUFFIX, "");
+        return new StringBuffer("{").append(key).append("}").toString();
+    }
+
 }

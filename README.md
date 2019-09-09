@@ -205,8 +205,9 @@ public class TestRateLimitController {
 为了遵守代码的开闭原则，您在添加新的限流算法时请参考包ratelimit、config和algorithm 
 
 #### 作者信息
-1. [个人网站](http://zhixiang.org.cn)
+1. [个人网站](http://shiyujun.cn)
 2. [GitHub](https://github.com/shiyujun)
+
 
 #### 项目实现设计的技术
 1.  [如何使用Redis执行Lua脚本](http://zhixiang.org.cn/2018/09/21/何使用Redis执行Lua脚本/)
@@ -228,10 +229,11 @@ public class TestRateLimitController {
 #####  1.1.1
 >1. 修复令牌桶算法脚本的bug
 
-
+#####  1.1.2
+>1. 将hashTag与当前key绑定，避免集群环境中所有key路由到同一个slot，造成的集群数据倾斜
 
 <h4 style="color:red">
-扫码关注公众号即可领取2000GJava学习资源 </h4>
+欢迎关注我的公众号，专注于Java知识体系学习，Spring、SpringBoot、SpringCloud源码解析 </h4>
 
 
 
