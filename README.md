@@ -15,7 +15,7 @@
 <dependency>
     <groupId>cn.org.zhixiang</groupId>
     <artifactId>syj-ratelimit</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
  </dependency>
  ```
 ### 2.  注册syj-ratelimit
