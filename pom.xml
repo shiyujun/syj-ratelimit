@@ -20,13 +20,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.0.4.RELEASE</version>
+            <version>6.2.10</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.3.7.RELEASE</version>
+            <version>6.2.10</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
-            <version>1.7.11.RELEASE</version>
+            <version>3.4.9</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
